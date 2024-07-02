@@ -9,10 +9,12 @@ import main.App;
 
 public class MouseInputs extends MouseAdapter implements MouseListener, MouseMotionListener {
 
-	int x, y;
+	public int x, y;
+	
+	private App app;
 	
 	public MouseInputs(App app) {
-		
+		this.app = app;
 	}
 	
 	public int getX() {
@@ -27,6 +29,6 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 	public void mouseMoved(MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
-		System.out.println("Mouse Moved : " + x + ", " + y);
 	}
+	
 }

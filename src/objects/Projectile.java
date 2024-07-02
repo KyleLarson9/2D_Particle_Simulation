@@ -14,7 +14,7 @@ public class Projectile extends AppObject {
 		super(x, y, id);
 	}
 
-	@Override
+	
 	public void update(LinkedList<AppObject> object) {
 		
 	}

@@ -10,37 +10,34 @@ public class VectorHandler {
 	private Vector2D tempVector;
 	
 	public VectorHandler() {
-		addVectorsInCircle();
+		
 	}
 	
 	public void render(Graphics2D g2d) {
+		for(Vector2D vector : vectors) {
+			vector.render(g2d);
+		}
+	}
+	
+	public void update() {
+		for(Vector2D vector : vectors) {
+			vector.update(vectors);
+		}
+	}
+	
+	public void updateVectorToMousePosition(int mouseX, int mouseY) {
 		for(int i = 0; i < vectors.size(); i++) {
-			tempVector = vectors.get(i);
-			tempVector.render(g2d);
+			tempVector = vectors.get(i).normalizeToMouse(mouseX, mouseY).mutpliyByScalar(20);
+			vectors.set(i, tempVector);
 		}
 	}
 	
-	public void addVectorsInCircle() {
-		int totalVectors = 20;
-		double centerX = 300;
-		double centerY = 400;
-		int radius = 100;
-		
-		for(int i = 0; i < totalVectors; i++) {
-			double angle = Math.toRadians((i * 360) / totalVectors);
-			double x = centerX + radius * Math.cos(angle);
-			double y = centerY + radius * Math.sin(angle);
-			
-			Vector2D currentVector = new Vector2D(centerX, centerY, x, y);
-			
-			this.vectors.add(currentVector);
-		}
-		
-	}
-	
-	public void addVector(Vector2D vector) {
-		
+	public void addVector(Vector2D vector) {		
 		this.vectors.add(vector);
+	}
+	
+	public void removeVector(Vector2D vector) {
+		this.vectors.remove(vector);
 	}
 	
 }

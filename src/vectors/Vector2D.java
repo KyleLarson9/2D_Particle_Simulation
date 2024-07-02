@@ -1,9 +1,9 @@
 package vectors;
 
 import java.awt.Color;
-
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.util.LinkedList;
 
 public class Vector2D {
 
@@ -23,7 +23,7 @@ public class Vector2D {
 		double dy = y2 - y2;
 		
 		return Math.atan2(dy, dx);
-	}
+	}  
 	
 	public double getMagnitude() {
 		return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
@@ -48,6 +48,18 @@ public class Vector2D {
 		
 	}
 	
+	public Vector2D normalizeToMouse(int mouseX, int mouseY) {
+		double dx = mouseX - x1;
+		double dy = mouseY - y1;
+		double magnitude = Math.sqrt(dx * dx + dy * dy);
+		
+		if(magnitude > 0) {
+			return new Vector2D(x1, y1, x1 + dx/magnitude, y1 + dy/magnitude);
+		} else {
+			return new Vector2D(x1, y1, x1, y1);
+		}
+	}
+	
 	public Vector2D offsetByAngle(double radian) {
 		double magntiude = getMagnitude();
 		
@@ -60,6 +72,10 @@ public class Vector2D {
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.white);
 		g2d.draw(new Line2D.Double(x1, y1, x2, y2));
+	}
+	
+	public void update(LinkedList<Vector2D> vector) {
+		
 	}
 	
 	@Override
