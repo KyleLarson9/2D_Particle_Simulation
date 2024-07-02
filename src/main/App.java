@@ -4,8 +4,8 @@ import java.awt.Graphics2D;
 
 import framework.Handler;
 import framework.ObjectId;
+import inputs.MouseInputs;
 import objects.Projectile;
-import vectors.Vector2D;
 import vectors.VectorHandler;
 
 // be able to move mouse and have a momentum vector follow
@@ -15,6 +15,7 @@ public class App {
 
 	private AppFrame frame;
 	protected AppPanel panel;
+	private MouseInputs mouseInputs;
 	private Handler handler;
 	private VectorHandler vectorHandler;
 	
@@ -49,12 +50,15 @@ public class App {
 	// private methods
 
 	private void initializeClasses() {
-		
+
+		mouseInputs = new MouseInputs(this);
 		handler = new Handler();
 		vectorHandler = new VectorHandler();
 		panel = new AppPanel(this);
 		frame = new AppFrame(panel);
 		
+		panel.addMouseListener(mouseInputs);
+		panel.addMouseMotionListener(mouseInputs);
 		handler.addObject(new Projectile(100, 100, ObjectId.Projectile));
 	}
 	
