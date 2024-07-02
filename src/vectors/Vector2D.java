@@ -1,5 +1,10 @@
 package vectors;
 
+import java.awt.Color;
+
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+
 public class Vector2D {
 
 	public double x1, y1;
@@ -12,6 +17,7 @@ public class Vector2D {
 		this.y2 = y2;
 	}
 	
+
 	public double getDirection() {
 		double dx = x2 - x1;
 		double dy = y2 - y2;
@@ -51,8 +57,14 @@ public class Vector2D {
 		return new Vector2D(x1, y1, newX2, newY2);
 	}
 	
+	public void render(Graphics2D g2d) {
+		g2d.setColor(Color.white);
+		g2d.draw(new Line2D.Double(x1, y1, x2, y2));
+	}
+	
 	@Override
     public String toString() {
 	    return "Vector2D[(" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + ")]";
     }
+
 }

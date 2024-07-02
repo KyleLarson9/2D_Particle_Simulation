@@ -9,13 +9,11 @@ public class Handler {
 	
 	private AppObject tempObject;
 	
-	public void update() {
-		
+	public void update() {	
 		for(int i = 0; i < object.size(); i++) {
 			tempObject = object.get(i);
 			tempObject.update(object);
-		}
-		
+		}		
 	}
 	
 	public void render(Graphics2D g2d) {

@@ -1,12 +1,12 @@
 package main;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
-import framework.AppObject;
 import framework.Handler;
 import framework.ObjectId;
 import objects.Projectile;
+import vectors.Vector2D;
+import vectors.VectorHandler;
 
 // be able to move mouse and have a momentum vector follow
 // left click to launch projectiles in that direction
@@ -16,6 +16,7 @@ public class App {
 	private AppFrame frame;
 	protected AppPanel panel;
 	private Handler handler;
+	private VectorHandler vectorHandler;
 	
 	private final static int TILES_DEFAULT_SIZE = 20;
 	private final static float SCALE = 1.0f;
@@ -38,6 +39,7 @@ public class App {
 	
 	public void render(Graphics2D g2d) {
 		handler.render(g2d);
+		vectorHandler.render(g2d);
 	}
 	
 	public void update() {
@@ -48,9 +50,10 @@ public class App {
 
 	private void initializeClasses() {
 		
+		handler = new Handler();
+		vectorHandler = new VectorHandler();
 		panel = new AppPanel(this);
 		frame = new AppFrame(panel);
-		handler = new Handler();
 		
 		handler.addObject(new Projectile(100, 100, ObjectId.Projectile));
 	}
