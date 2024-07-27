@@ -5,14 +5,11 @@ import java.util.Random;
 
 import framework.Handler;
 import framework.ObjectId;
+import framework.ScaleUtils;
 import inputs.MouseInputs;
 import objects.Projectile;
 import vectors.Vector2D;
 import vectors.VectorHandler;
-
-// be able to move mouse and have a momentum vector follow
-// left click to launch projectiles in that direction
-// give each object a momentum/directional vector that updates
 
 public class App implements Runnable {
 
@@ -36,7 +33,7 @@ public class App implements Runnable {
 	private final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int APP_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
 	public final static int APP_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
-	
+		
 	int updateCounter = 0;
 	
 	public App() {
@@ -46,7 +43,6 @@ public class App implements Runnable {
 		panel.requestFocus();
 		
 		startAppLoop();
-		
 	}
 	
 	// public methods
@@ -87,7 +83,7 @@ public class App implements Runnable {
 
 	private void initializeObjectsAndVectors() {
 		
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 1; i++) {
 			Vector2D momentumVector = new Vector2D(0, 0, 0, 0);
 			vectorHandler.addVector(momentumVector);
 			Projectile projectile = new Projectile(rand.nextInt(APP_WIDTH), rand.nextInt(APP_HEIGHT), 5, momentumVector, ObjectId.Projectile);

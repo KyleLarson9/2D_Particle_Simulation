@@ -9,18 +9,25 @@ import java.util.LinkedList;
 
 import framework.AppObject;
 import framework.ObjectId;
+import framework.ScaleUtils;
 import vectors.Vector2D;
 
+// give velocity components
+
 public class Projectile extends AppObject {
-			
-	public Projectile(float x, float y, float mass, Vector2D momentumVector, ObjectId id) {
-		super(x, y, mass, momentumVector, id);
-		momentumVector.x1 = x;
-		momentumVector.y1 = y;
+	
+	public Projectile(float xPixels, float yPixels, float mass, Vector2D momentumVector, ObjectId id) {
+		super(xPixels, yPixels, mass, momentumVector, id);
+		momentumVector.x1 = xPixels;
+		momentumVector.y1 = yPixels;
+				
+		momentumVector.x2 = xPixels+50;
+		momentumVector.y2 = yPixels+50;
 		
+		float xPositionInMeters = ScaleUtils.pixelsToMeters(xPixels);
+		float yPositionInMeters = ScaleUtils.pixelsToMeters(yPixels);
 		
-		momentumVector.x2 = x+50;
-		momentumVector.y2 = y+50;
+		System.out.println("Projectile posisiton in meters: (" + xPositionInMeters + "," + yPositionInMeters + ")");
 	}
 	
 	// public methods
