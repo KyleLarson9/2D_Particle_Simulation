@@ -46,21 +46,20 @@ public class App implements Runnable {
 		panel.requestFocus();
 		
 		startAppLoop();
-	
 		
 	}
 	
 	// public methods
 	
 	public void render(Graphics2D g2d) {
-		handler.render(g2d);
 		vectorHandler.render(g2d);
+		handler.render(g2d);
 	}
 	
 	public void update() {
-		handler.update();
 		vectorHandler.update();
-		vectorHandler.updateVectorToMousePosition(mouseInputs.getX(), mouseInputs.getY());
+		handler.update();
+		//vectorHandler.updateVectorToMousePosition(mouseInputs.getX(), mouseInputs.getY());
 	}
 	
 	// private methods
@@ -79,24 +78,24 @@ public class App implements Runnable {
 		frame = new AppFrame(panel);
 		mouseInputs = new MouseInputs(this);
 		
-		panel.addMouseListener(mouseInputs);
+		panel.addMouseListener(mouseInputs);  
 		panel.addMouseMotionListener(mouseInputs);
+	
+		initializeObjectsAndVectors();
 		
-		int x, y;
-		int x2, y2;
-		
-		for(int i = 0; i < 1000; i++) {
-			x = rand.nextInt(APP_WIDTH);
-			y = rand.nextInt(APP_HEIGHT);
-			x2 = rand.nextInt(APP_WIDTH);
-			y2 = rand.nextInt(APP_HEIGHT);
-			
-			vectorHandler.addVector(new Vector2D(x, y, x2, y2));
-		}
-		
-		handler.addObject(new Projectile(100, 100, ObjectId.Projectile));
 	}
 
+	private void initializeObjectsAndVectors() {
+		
+		for(int i = 0; i < 10; i++) {
+			Vector2D momentumVector = new Vector2D(0, 0, 0, 0);
+			vectorHandler.addVector(momentumVector);
+			Projectile projectile = new Projectile(rand.nextInt(APP_WIDTH), rand.nextInt(APP_HEIGHT), 5, momentumVector, ObjectId.Projectile);
+			handler.addObject(projectile);
+		}
+
+	}
+	
 	@Override
 	public void run() {
 		double timePerFrame = 1_000_000_000.0 / FPS; // how long each from will last, 1 second

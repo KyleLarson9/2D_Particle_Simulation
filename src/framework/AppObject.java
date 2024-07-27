@@ -3,19 +3,54 @@ package framework;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+import vectors.Vector2D;
+
 public abstract class AppObject {
 
 	protected float x, y;
 	protected float velX = 0, velY = 0;
+	protected float mass;
+	protected Vector2D momentumVector;
 	
 	protected ObjectId id;
 	
+	// default
+	public AppObject() {
+		
+	}
+	
+	// basic object
 	public AppObject(float x, float y, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 	}
 	
+	// projectile
+	public AppObject(float x, float y, float mass, Vector2D momentumVector, ObjectId id) {
+		this.x = x;
+		this.y = y;
+		this.mass = mass;
+		this.momentumVector = momentumVector;
+		this.id = id;
+	}
+	
+	public float getMass() {
+		return mass;
+	}
+
+	public void setMass(float mass) {
+		this.mass = mass;
+	}
+	
+	public Vector2D getMomentumVector() {
+		return momentumVector;
+	}
+	
+	public void setMomentumVector(Vector2D momentumVector) {
+		this.momentumVector = momentumVector;
+	}
+
 	public abstract void update(LinkedList<AppObject> object);
 	public abstract void render(Graphics2D g2d);
 	

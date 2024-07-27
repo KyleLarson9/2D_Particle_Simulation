@@ -10,7 +10,7 @@ public class VectorHandler {
 	private Vector2D tempVector;
 	
 	public VectorHandler() {
-		
+
 	}
 	
 	public void render(Graphics2D g2d) {
@@ -32,7 +32,7 @@ public class VectorHandler {
 		}
 	}
 	
-	public void addVector(Vector2D vector) {		
+	public void addVector(Vector2D vector) {	
 		this.vectors.add(vector);
 	}
 	

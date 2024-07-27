@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Vector2D {
 
+	private Random rand = new Random();
+	
 	public double x1, y1;
 	public double x2, y2;
 	
@@ -17,7 +20,16 @@ public class Vector2D {
 		this.y2 = y2;
 	}
 	
-
+	public Vector2D getXComponent() {
+		
+		return new Vector2D(x1, y1, x2, y1);
+	}
+	
+	public Vector2D getYComponent() {
+		
+		return new Vector2D(x1, y1, x1, y2);
+	}
+	
 	public double getDirection() {
 		double dx = x2 - x1;
 		double dy = y2 - y2;
@@ -46,7 +58,7 @@ public class Vector2D {
 		
 		return new Vector2D(x1, y1, dx + x1, dy + y1);
 		
-	}
+	} 
 	
 	public Vector2D normalizeToMouse(int mouseX, int mouseY) {
 		double dx = mouseX - x1;
@@ -72,6 +84,14 @@ public class Vector2D {
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.white);
 		g2d.draw(new Line2D.Double(x1, y1, x2, y2));
+	}
+	
+	public Color randColor() {
+		
+		int r = rand.nextInt(256);
+		int g = rand.nextInt(256);
+		int b = rand.nextInt(256);
+		return new Color(r, g, b);
 	}
 	
 	public void update(LinkedList<Vector2D> vector) {
