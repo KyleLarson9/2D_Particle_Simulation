@@ -81,23 +81,6 @@ public class Vector2D {
 		return new Vector2D(x1, y1, newX2, newY2);
 	}
 	
-	public void render(Graphics2D g2d) {
-		g2d.setColor(Color.white);
-		g2d.draw(new Line2D.Double(x1, y1, x2, y2));
-	}
-	
-	public Color randColor() {
-		
-		int r = rand.nextInt(256);
-		int g = rand.nextInt(256);
-		int b = rand.nextInt(256);
-		return new Color(r, g, b);
-	}
-	
-	public void update(LinkedList<Vector2D> vector) {
-		
-	}
-	
 	@Override
     public String toString() {
 	    return "Vector2D[(" + x1 + ", " + y1 + "), (" + x2 + ", " + y2 + ")]";

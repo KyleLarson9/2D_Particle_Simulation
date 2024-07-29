@@ -9,7 +9,7 @@ import main.App;
 
 public class MouseInputs extends MouseAdapter implements MouseListener, MouseMotionListener {
 
-	public int x, y;
+	public static int x, y;
 	
 	private App app;
 	
@@ -17,16 +17,16 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 		this.app = app;
 	}
 	
-	public int getX() {
+	public static int getX() {
 		return x;
 	}
 	
-	public int getY() {
+	public static int getY() {
 		return y;
 	}
 	
 	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
 	}

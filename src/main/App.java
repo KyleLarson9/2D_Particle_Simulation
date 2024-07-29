@@ -5,7 +5,6 @@ import java.util.Random;
 
 import framework.Handler;
 import framework.ObjectId;
-import framework.ScaleUtils;
 import inputs.MouseInputs;
 import objects.Projectile;
 import vectors.Vector2D;
@@ -53,9 +52,8 @@ public class App implements Runnable {
 	}
 	
 	public void update() {
-		vectorHandler.update();
 		handler.update();
-		//vectorHandler.updateVectorToMousePosition(mouseInputs.getX(), mouseInputs.getY());
+		
 	}
 	
 	// private methods
@@ -83,13 +81,10 @@ public class App implements Runnable {
 
 	private void initializeObjectsAndVectors() {
 		
-		for(int i = 0; i < 1; i++) {
-			Vector2D momentumVector = new Vector2D(0, 0, 0, 0);
-			vectorHandler.addVector(momentumVector);
-			Projectile projectile = new Projectile(rand.nextInt(APP_WIDTH), rand.nextInt(APP_HEIGHT), 5, momentumVector, ObjectId.Projectile);
-			handler.addObject(projectile);
-		}
-
+		Vector2D momentumVector = new Vector2D(0, 0, 0, 0);
+		vectorHandler.addVector(momentumVector);
+		Projectile projectile = new Projectile((APP_WIDTH/2), (APP_HEIGHT/2), 10, momentumVector, ObjectId.Projectile);
+		handler.addObject(projectile);
 	}
 	
 	@Override

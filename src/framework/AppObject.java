@@ -10,8 +10,8 @@ public abstract class AppObject {
 	protected float x, y;
 	protected float velX = 0, velY = 0;
 	protected float mass;
-	protected Vector2D momentumVector;
-	
+	protected Vector2D vector;
+
 	protected ObjectId id;
 	
 	// default
@@ -31,7 +31,7 @@ public abstract class AppObject {
 		this.x = x;
 		this.y = y;
 		this.mass = mass;
-		this.momentumVector = momentumVector;
+		this.vector = momentumVector;
 		this.id = id;
 	}
 	
@@ -44,11 +44,11 @@ public abstract class AppObject {
 	}
 	
 	public Vector2D getMomentumVector() {
-		return momentumVector;
+		return vector;
 	}
 	
 	public void setMomentumVector(Vector2D momentumVector) {
-		this.momentumVector = momentumVector;
+		this.vector = momentumVector;
 	}
 
 	public abstract void update(LinkedList<AppObject> object);
