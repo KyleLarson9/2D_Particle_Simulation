@@ -30,6 +30,14 @@ public class Vector2D {
 		return new Vector2D(x1, y1, x1, y2);
 	}
 	
+	public double getTestDirection(double mouseX, double mouseY) {
+		
+		double dx = mouseX - x1;
+		double dy = mouseY - y1;
+		
+		return Math.atan2(dy, dx);
+	}
+	
 	public double getDirection() {
 		double dx = x2 - x1;
 		double dy = y2 - y2;
@@ -41,7 +49,7 @@ public class Vector2D {
 		return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
 	}
 	
-	public Vector2D mutpliyByScalar(int scalar) {
+	public Vector2D multiplyByScalar(int scalar) {
 		
 		double dx = x2 - x1; 
 		double dy = y2 - y1;

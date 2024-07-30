@@ -54,6 +54,19 @@ public class App implements Runnable {
 	public void update() {
 		handler.update();
 		
+		if(MouseInputs.clicked) {
+			double startX = APP_WIDTH / 2.0;
+		    double startY = APP_HEIGHT / 2.0;
+		    double targetX = MouseInputs.getX();
+		    double targetY = MouseInputs.getY();
+
+		    Vector2D vector = new Vector2D(startX, startY, targetX, targetY);
+		    vectorHandler.addVector(vector);
+		    Projectile newProjectile = new Projectile(startX, startY, 10, vector, ObjectId.Projectile);
+		    handler.addObject(newProjectile);
+
+		    mouseInputs.resetClick(); 
+		}
 	}
 	
 	// private methods
@@ -74,18 +87,9 @@ public class App implements Runnable {
 		
 		panel.addMouseListener(mouseInputs);  
 		panel.addMouseMotionListener(mouseInputs);
-	
-		initializeObjectsAndVectors();
-		
+			
 	}
 
-	private void initializeObjectsAndVectors() {
-		
-		Vector2D momentumVector = new Vector2D(0, 0, 0, 0);
-		vectorHandler.addVector(momentumVector);
-		Projectile projectile = new Projectile((APP_WIDTH/2), (APP_HEIGHT/2), 10, momentumVector, ObjectId.Projectile);
-		handler.addObject(projectile);
-	}
 	
 	@Override
 	public void run() {

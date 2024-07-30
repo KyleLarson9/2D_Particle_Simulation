@@ -20,30 +20,49 @@ public class Projectile extends AppObject {
 	
 	private final int WIDTH_PIXELS = 8;
 	private final int HEIGHT_PIXELS = 8;
-	private final double WIDTH_METERS = ScaleUtils.pixelsToMeters(WIDTH_PIXELS);
-	private final double HEIGHT_METERS = ScaleUtils.pixelsToMeters(HEIGHT_PIXELS);
+
+	private Vector2D normalizedVector;
+
+	private boolean launched = false;
+	private boolean moving = false;
 	
-	public Projectile(float x, float y, float mass, Vector2D vector, ObjectId id) {
+	private double vel = 2;
+	private double xVel, yVel;
+	
+	public Projectile(double x, double y, double mass, Vector2D vector, ObjectId id) {
 		super(x, y, mass, vector, id);
-		
 
 	}
 	
 	// public methods
 	
 	public void update(LinkedList<AppObject> object) {
-		
+				
 		updateVectorPosition();
 		
+		
+		if(MouseInputs.clicked && !launched) {
+			launched = true;
+					
+			double radians = vector.getTestDirection(MouseInputs.getX(), MouseInputs.getY());
+			xVel = vel * Math.cos(radians);
+			yVel = vel * Math.sin(radians);		
+		} 
+		
+		if(launched) {
+			x+=xVel;
+			y+=yVel;
+		}
+		
 	}
-
+	
 	public void updateVectorPosition() {
 		vector.x1 = x + 4;
 		vector.x2 = MouseInputs.getX();
 		vector.y1 = y + 4;
 		vector.y2 = MouseInputs.getY();
 		
-		Vector2D normalizedVector = vector.normalize().mutpliyByScalar(20);
+		normalizedVector = vector.normalize().multiplyByScalar(20);
 		vector.x1 = normalizedVector.x1;
 		vector.x2 = normalizedVector.x2;
 		vector.y1 = normalizedVector.y1;
@@ -52,7 +71,7 @@ public class Projectile extends AppObject {
 	
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.red);
-		g2d.fill(new Rectangle2D.Float(x, y, WIDTH_PIXELS, HEIGHT_PIXELS));
+		g2d.fill(new Rectangle2D.Double(x, y, WIDTH_PIXELS, HEIGHT_PIXELS));
 
 	}
 	

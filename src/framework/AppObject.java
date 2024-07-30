@@ -5,11 +5,13 @@ import java.util.LinkedList;
 
 import vectors.Vector2D;
 
+// Holds methods needed for object
+
 public abstract class AppObject {
 
-	protected float x, y;
-	protected float velX = 0, velY = 0;
-	protected float mass;
+	protected double x, y;
+	protected double velX = 0, velY = 0;
+	protected double mass;
 	protected Vector2D vector;
 
 	protected ObjectId id;
@@ -20,22 +22,25 @@ public abstract class AppObject {
 	}
 	
 	// basic object
-	public AppObject(float x, float y, ObjectId id) {
+	public AppObject(double x, double y, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 	}
 	
 	// projectile
-	public AppObject(float x, float y, float mass, Vector2D momentumVector, ObjectId id) {
+	public AppObject(double x, double y, double mass, Vector2D vector, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.mass = mass;
-		this.vector = momentumVector;
+		this.vector = vector;
 		this.id = id;
 	}
 	
-	public float getMass() {
+	public abstract void update(LinkedList<AppObject> object);
+	public abstract void render(Graphics2D g2d);
+	
+	public double getMass() {
 		return mass;
 	}
 
@@ -43,22 +48,19 @@ public abstract class AppObject {
 		this.mass = mass;
 	}
 	
-	public Vector2D getMomentumVector() {
+	public Vector2D getVector() {
 		return vector;
 	}
 	
-	public void setMomentumVector(Vector2D momentumVector) {
-		this.vector = momentumVector;
+	public void setVector(Vector2D vector) {
+		this.vector = vector;
 	}
-
-	public abstract void update(LinkedList<AppObject> object);
-	public abstract void render(Graphics2D g2d);
 	
-	public float getX() {
+	public double getX() {
 		return x;
 	}
 	
-	public float getY() {
+	public double getY() {
 		return y;
 	}
 	
@@ -70,11 +72,11 @@ public abstract class AppObject {
 		this.y = y;
 	}
 	
-	public float getVelX() {
+	public double getVelX() {
 		return velX;
 	}
 	
-	public float getVelY() {
+	public double getVelY() {
 		return velY;
 	}
 	

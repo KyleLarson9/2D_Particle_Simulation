@@ -10,6 +10,7 @@ import main.App;
 public class MouseInputs extends MouseAdapter implements MouseListener, MouseMotionListener {
 
 	public static int x, y;
+	public static boolean clicked = false;
 	
 	private App app;
 	
@@ -27,8 +28,13 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		clicked = true;
 		x = e.getX();
 		y = e.getY();
+	}
+	
+	public void resetClick() {
+		clicked = false;
 	}
 	
 }

@@ -3,6 +3,8 @@ package framework;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+// Handles the rendering and updating of all objects 
+
 public class Handler {
 
 	public LinkedList<AppObject> object = new LinkedList<AppObject>();

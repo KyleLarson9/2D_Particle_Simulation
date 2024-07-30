@@ -11,7 +11,6 @@ public class VectorHandler {
 
 	public LinkedList<Vector2D> vectors = new LinkedList<>();
 	
-	private Vector2D tempVector;
 	
 	public VectorHandler() {
 
