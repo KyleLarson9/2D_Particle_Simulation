@@ -2,7 +2,7 @@ package framework;
 
 public class ScaleUtils {
 
-	private static final float SCALE_FACTOR = 10f; // 1 pixels per meter
+	private static final double SCALE_FACTOR = 10; // 10 pixels per meter
 	
 	// conversion methods
 	
@@ -10,11 +10,11 @@ public class ScaleUtils {
 		return meters * SCALE_FACTOR;
 	}
 	
-	public static float pixelsToMeters(float pixels) {
-		return pixels / SCALE_FACTOR;
+	public static double pixelsToMeters(double GRAVITY) {
+		return GRAVITY / SCALE_FACTOR;
 	}
 	
-	public static float getScaleFactor() {
+	public static double getScaleFactor() {
 		return SCALE_FACTOR;
 	}
 }

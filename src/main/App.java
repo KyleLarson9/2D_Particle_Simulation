@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Graphics2D;
-import java.util.Random;
 
 import framework.Handler;
 import framework.ObjectId;
@@ -17,8 +16,7 @@ public class App implements Runnable {
 	private MouseInputs mouseInputs;
 	private Handler handler;
 	private VectorHandler vectorHandler;
-	private Random rand = new Random();
-	
+		
 	private Thread thread;
 	private boolean running = true;
 	
@@ -55,7 +53,7 @@ public class App implements Runnable {
 		handler.update();
 		
 		if(MouseInputs.clicked) {
-			double startX = APP_WIDTH / 2.0;
+			double startX = 10;
 		    double startY = APP_HEIGHT / 2.0;
 		    double targetX = MouseInputs.getX();
 		    double targetY = MouseInputs.getY();
@@ -67,6 +65,7 @@ public class App implements Runnable {
 
 		    mouseInputs.resetClick(); 
 		}
+		
 	}
 	
 	// private methods
@@ -83,13 +82,14 @@ public class App implements Runnable {
 		vectorHandler = new VectorHandler();
 		panel = new AppPanel(this);
 		frame = new AppFrame(panel);
-		mouseInputs = new MouseInputs(this);
+		mouseInputs = new MouseInputs();
 		
 		panel.addMouseListener(mouseInputs);  
 		panel.addMouseMotionListener(mouseInputs);
-			
+
 	}
 
+	// Override methods
 	
 	@Override
 	public void run() {

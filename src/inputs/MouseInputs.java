@@ -11,11 +11,8 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 
 	public static int x, y;
 	public static boolean clicked = false;
-	
-	private App app;
-	
-	public MouseInputs(App app) {
-		this.app = app;
+		
+	public MouseInputs() {
 	}
 	
 	public static int getX() {
