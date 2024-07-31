@@ -28,13 +28,12 @@ public class Projectile extends AppObject {
 	
 	private double GRAVITY = Constants.GRAVITY.getConstant();
 	
-	private float dt = .016f;
+	private float dt = .00833f;
 	
 	public Projectile(double x, double y, double mass, Vector2D vector, ObjectId id) {
 		super(x, y, mass, vector, id);
 
 	}
-	
 	// public methods
 	
 	public void update(LinkedList<AppObject> object) {
@@ -51,10 +50,10 @@ public class Projectile extends AppObject {
 
 		if(launched) {
 			
-			yVel += ScaleUtils.pixelsToMeters(GRAVITY) * dt;
+			yVel += GRAVITY * dt;
 			
-			x+=xVel * dt;
-			y+=yVel * dt;
+			x+=ScaleUtils.metersToPixels(xVel) * dt;
+			y+=ScaleUtils.metersToPixels(yVel) * dt;
 		}
 		
 	}

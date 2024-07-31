@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import framework.Handler;
@@ -47,6 +48,9 @@ public class App implements Runnable {
 	public void render(Graphics2D g2d) {
 		vectorHandler.render(g2d);
 		handler.render(g2d);
+		
+		g2d.setColor(Color.green);
+		g2d.drawLine(0, (APP_HEIGHT/2) + 8, APP_WIDTH, (APP_HEIGHT/2) + 8);
 	}
 	
 	public void update() {
