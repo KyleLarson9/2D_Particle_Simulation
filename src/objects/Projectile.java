@@ -23,6 +23,7 @@ public class Projectile extends AppObject {
 	private final int height = 8;
 
 	private boolean launched = false;
+	private boolean moving = false;
 	
 	private double vel = 200; // pixels/s
 	private double xVel, yVel;
@@ -43,13 +44,14 @@ public class Projectile extends AppObject {
 		
 		if(MouseInputs.clicked && !launched) {
 			launched = true;
+			moving = true;
 			double radians = vector.getMouseDirection(MouseInputs.getX(), MouseInputs.getY());
  			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
 			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);		
 			
 		} 
 
-		if(launched) {
+		if(launched && moving) {
 			
 			yVel += GRAVITY * dt;
 			
@@ -71,9 +73,7 @@ public class Projectile extends AppObject {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					// change this to a moving boolean
 					y = tempObject.getY() - height;
-					yVel = 0;
-					xVel = 0;
-					GRAVITY = 0;
+					moving = false;
 				}
 			}
 			
