@@ -30,7 +30,7 @@ public class Vector2D {
 		return new Vector2D(x1, y1, x1, y2);
 	}
 	
-	public double getTestDirection(double mouseX, double mouseY) {
+	public double getMouseDirection(double mouseX, double mouseY) {
 		
 		double dx = mouseX - x1;
 		double dy = mouseY - y1;

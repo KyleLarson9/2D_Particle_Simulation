@@ -3,6 +3,9 @@ package framework;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
 
+import main.App;
+import objects.Block;
+
 // Handles the rendering and updating of all objects 
 
 public class Handler {
@@ -31,6 +34,12 @@ public class Handler {
 	
 	public void removeObject(AppObject object) {
 		this.object.remove(object);
+	}
+	
+	// create seperate class for this later
+	public void createLevel() {
+		for(int i = 0; i < App.APP_WIDTH + 8; i+=8) 
+			addObject(new Block(i, App.APP_HEIGHT/2 + 8, ObjectId.Block));
 	}
 	
 }

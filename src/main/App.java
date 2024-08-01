@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import framework.AppObject;
 import framework.Handler;
 import framework.ObjectId;
 import inputs.MouseInputs;
@@ -17,7 +18,7 @@ public class App implements Runnable {
 	private MouseInputs mouseInputs;
 	private Handler handler;
 	private VectorHandler vectorHandler;
-		
+	private Projectile newProjectile;
 	private Thread thread;
 	private boolean running = true;
 	
@@ -41,6 +42,7 @@ public class App implements Runnable {
 		panel.requestFocus();
 		
 		startAppLoop();
+		
 	}
 	
 	// public methods
@@ -49,14 +51,13 @@ public class App implements Runnable {
 		vectorHandler.render(g2d);
 		handler.render(g2d);
 		
-		g2d.setColor(Color.green);
-		g2d.drawLine(0, (APP_HEIGHT/2) + 8, APP_WIDTH, (APP_HEIGHT/2) + 8);
 	}
 	
 	public void update() {
 		handler.update();
 		
 		if(MouseInputs.clicked) {
+						
 			double startX = 10;
 		    double startY = APP_HEIGHT / 2.0;
 		    double targetX = MouseInputs.getX();
@@ -64,11 +65,21 @@ public class App implements Runnable {
 
 		    Vector2D vector = new Vector2D(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
-		    Projectile newProjectile = new Projectile(startX, startY, 10, vector, ObjectId.Projectile);
+		    newProjectile = new Projectile(startX, startY, 10, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newProjectile);
 
+		    if(newProjectile != null) {
+				for(int i = 0; i < handler.object.size(); i++) {
+					AppObject tempObject = handler.object.get(i);
+					if(tempObject.getId() == ObjectId.Projectile) {
+						//System.out.println("Projectile");						
+					}
+				}
+			}
+		    
 		    mouseInputs.resetClick(); 
 		}
+			
 		
 	}
 	
@@ -91,6 +102,8 @@ public class App implements Runnable {
 		panel.addMouseListener(mouseInputs);  
 		panel.addMouseMotionListener(mouseInputs);
 
+		handler.createLevel();
+		
 	}
 
 	// Override methods

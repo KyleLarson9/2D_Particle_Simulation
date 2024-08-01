@@ -2,24 +2,25 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Path2D.Double;
-import java.awt.geom.Path2D.Float;
 import java.util.LinkedList;
 
 import framework.AppObject;
 import framework.Constants;
+import framework.Handler;
 import framework.ObjectId;
 import framework.ScaleUtils;
 import inputs.MouseInputs;
 import vectors.Vector2D;
 
+// add elastic collisions
+
 public class Projectile extends AppObject {
 	
-	private final int WIDTH_PIXELS = 8;
-	private final int HEIGHT_PIXELS = 8;
+	private Handler handler;
+	
+	private final int width = 8;
+	private final int height = 8;
 
 	private boolean launched = false;
 	
@@ -28,11 +29,11 @@ public class Projectile extends AppObject {
 	
 	private double GRAVITY = Constants.GRAVITY.getConstant();
 	
-	private float dt = .00833f;
+	private float dt = .00833f; // 1 / FPS
 	
-	public Projectile(double x, double y, double mass, Vector2D vector, ObjectId id) {
+	public Projectile(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		super(x, y, mass, vector, id);
-
+		this.handler = handler;
 	}
 	// public methods
 	
@@ -42,8 +43,8 @@ public class Projectile extends AppObject {
 		
 		if(MouseInputs.clicked && !launched) {
 			launched = true;
-			double radians = vector.getTestDirection(MouseInputs.getX(), MouseInputs.getY());
-			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
+			double radians = vector.getMouseDirection(MouseInputs.getX(), MouseInputs.getY());
+ 			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
 			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);		
 			
 		} 
@@ -54,6 +55,28 @@ public class Projectile extends AppObject {
 			
 			x+=ScaleUtils.metersToPixels(xVel) * dt;
 			y+=ScaleUtils.metersToPixels(yVel) * dt;
+
+		}
+		
+		collision(object);
+		
+	}
+	
+	private void collision(LinkedList<AppObject> object) {
+		
+		for(int i = 0; i < handler.object.size(); i++) {
+			AppObject tempObject = handler.object.get(i);
+			
+			if(tempObject.getId() == ObjectId.Block) {
+				if(getBounds().intersects(tempObject.getBounds())) {
+					// change this to a moving boolean
+					y = tempObject.getY() - height;
+					yVel = 0;
+					xVel = 0;
+					GRAVITY = 0;
+				}
+			}
+			
 		}
 		
 	}
@@ -74,9 +97,17 @@ public class Projectile extends AppObject {
 	
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.black);
-		g2d.fill(new Rectangle2D.Double(x, y, WIDTH_PIXELS, HEIGHT_PIXELS));
+		g2d.fill(new Rectangle2D.Double(x, y, width, height));
 
 	}
+
+	@Override
+	public Rectangle2D getBounds() {
+
+		return new Rectangle2D.Double(x, y, width, height);
+	}
+
+
 	
 	
 }

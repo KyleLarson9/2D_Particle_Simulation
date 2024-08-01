@@ -1,6 +1,7 @@
 package framework;
 
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
 import vectors.Vector2D;
@@ -39,7 +40,9 @@ public abstract class AppObject {
 	
 	public abstract void update(LinkedList<AppObject> object);
 	public abstract void render(Graphics2D g2d);
-	
+	public abstract Rectangle2D getBounds();
+
+
 	public double getMass() {
 		return mass;
 	}
@@ -64,11 +67,11 @@ public abstract class AppObject {
 		return y;
 	}
 	
-	public void setX(float x) {
-		this.x = x;
+	public void setX(double x2) {
+		this.x = x2;
 	}
 	
-	public void setY(float y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 	
