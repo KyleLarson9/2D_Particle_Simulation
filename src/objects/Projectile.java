@@ -31,23 +31,25 @@ public class Projectile extends AppObject {
 	private double GRAVITY = Constants.GRAVITY.getConstant();
 	
 	private float dt = .00833f; // 1 / FPS
-	
+		
 	public Projectile(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		super(x, y, mass, vector, id);
 		this.handler = handler;
+		
 	}
 	// public methods
 	
 	public void update(LinkedList<AppObject> object) {
-		
-		updateVectorPosition();
-		
+				
 		if(MouseInputs.clicked && !launched) {
+						
 			launched = true;
 			moving = true;
 			double radians = vector.getMouseDirection(MouseInputs.getX(), MouseInputs.getY());
  			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
 			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);		
+			
+			
 			
 		} 
 
@@ -59,7 +61,8 @@ public class Projectile extends AppObject {
 			y+=ScaleUtils.metersToPixels(yVel) * dt;
 
 		}
-		
+		updateVectorPosition();
+
 		collision(object);
 		
 	}
@@ -71,7 +74,6 @@ public class Projectile extends AppObject {
 			
 			if(tempObject.getId() == ObjectId.Block) {
 				if(getBounds().intersects(tempObject.getBounds())) {
-					// change this to a moving boolean
 					y = tempObject.getY() - height;
 					moving = false;
 				}
@@ -81,18 +83,29 @@ public class Projectile extends AppObject {
 		
 	}
 	
-	public void updateVectorPosition() {
+	public void updateVectorPosition() { // velocity vector
+
+		if(!launched) { // get initial direction
+			Vector2D directionVector = new Vector2D(x + (width/2), y + (height/2), MouseInputs.getX(), MouseInputs.getY());
+			Vector2D normalizedDirectionVector = directionVector.normalize().multiplyByScalar(20);
+			vector.x1 = normalizedDirectionVector.x1;
+			vector.x2 = normalizedDirectionVector.x2;
+			vector.y1 = normalizedDirectionVector.y1;
+			vector.y2 = normalizedDirectionVector.y2;	
+		} else if(launched && moving) {
+			Vector2D velocityVector = new Vector2D(x + (width/2), y + (height/2), x + (width/2) + (xVel), y + (height/2) + (yVel));
+            Vector2D normalizedVelocityVector = velocityVector.normalize().multiplyByScalar(20);
+            vector.x1 = normalizedVelocityVector.x1;
+            vector.x2 = normalizedVelocityVector.x2;
+            vector.y1 = normalizedVelocityVector.y1;
+            vector.y2 = normalizedVelocityVector.y2;	
+            } else if(launched && !moving) {
+			vector.x1 = 0;
+			vector.x2 = 0;
+			vector.y1 = 0;
+			vector.y2 = 0;
+		}
 		
-		vector.x1 = x + 4;
-		vector.x2 = MouseInputs.getX();
-		vector.y1 = y + 4;
-		vector.y2 = MouseInputs.getY();
-		
-		Vector2D normalizedVector = vector.normalize().multiplyByScalar(20);
-		vector.x1 = normalizedVector.x1;
-		vector.x2 = normalizedVector.x2;
-		vector.y1 = normalizedVector.y1;
-		vector.y2 = normalizedVector.y2;
 	}
 	
 	public void render(Graphics2D g2d) {
