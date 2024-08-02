@@ -37,22 +37,18 @@ public class Projectile extends AppObject {
 		this.handler = handler;
 		
 	}
+	
 	// public methods
 	
 	public void update(LinkedList<AppObject> object) {
 				
-		if(MouseInputs.clicked && !launched) {
-						
+		if(MouseInputs.clicked && !launched) {					
 			launched = true;
 			moving = true;
 			double radians = vector.getMouseDirection(MouseInputs.getX(), MouseInputs.getY());
  			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
-			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);		
-			
-			
-			
+			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);			
 		} 
-
 		if(launched && moving) {
 			
 			yVel += GRAVITY * dt;
@@ -66,6 +62,18 @@ public class Projectile extends AppObject {
 		collision(object);
 		
 	}
+	
+	public void render(Graphics2D g2d) {
+		g2d.setColor(Color.black);
+		g2d.fill(new Rectangle2D.Double(x, y, width, height));
+
+	}
+	
+	public Rectangle2D getBounds() {
+		return new Rectangle2D.Double(x, y, width, height);
+	}
+	
+	// private methods
 	
 	private void collision(LinkedList<AppObject> object) {
 		
@@ -83,23 +91,17 @@ public class Projectile extends AppObject {
 		
 	}
 	
-	public void updateVectorPosition() { // velocity vector
+	private void updateVectorPosition() {
 
 		if(!launched) { // get initial direction
 			Vector2D directionVector = new Vector2D(x + (width/2), y + (height/2), MouseInputs.getX(), MouseInputs.getY());
-			Vector2D normalizedDirectionVector = directionVector.normalize().multiplyByScalar(20);
-			vector.x1 = normalizedDirectionVector.x1;
-			vector.x2 = normalizedDirectionVector.x2;
-			vector.y1 = normalizedDirectionVector.y1;
-			vector.y2 = normalizedDirectionVector.y2;	
-		} else if(launched && moving) {
+			directionVector = directionVector.normalize().multiplyByScalar(20);
+			setVector(vector, directionVector);
+		} else if(launched && moving) { // velocity vector
 			Vector2D velocityVector = new Vector2D(x + (width/2), y + (height/2), x + (width/2) + (xVel), y + (height/2) + (yVel));
-            Vector2D normalizedVelocityVector = velocityVector.normalize().multiplyByScalar(20);
-            vector.x1 = normalizedVelocityVector.x1;
-            vector.x2 = normalizedVelocityVector.x2;
-            vector.y1 = normalizedVelocityVector.y1;
-            vector.y2 = normalizedVelocityVector.y2;	
-            } else if(launched && !moving) {
+			velocityVector = velocityVector.normalize().multiplyByScalar(20);
+            setVector(vector, velocityVector);
+        } else if(launched && !moving) {
 			vector.x1 = 0;
 			vector.x2 = 0;
 			vector.y1 = 0;
@@ -108,20 +110,12 @@ public class Projectile extends AppObject {
 		
 	}
 	
-	public void render(Graphics2D g2d) {
-		g2d.setColor(Color.black);
-		g2d.fill(new Rectangle2D.Double(x, y, width, height));
-
+	public void setVector(Vector2D vec1, Vector2D vec2) {
+		vec1.x1 = vec2.x1;
+		vec1.y1 = vec2.y1;
+		vec1.x2 = vec2.x2;
+		vec1.y2 = vec2.y2;
 	}
-
-	@Override
-	public Rectangle2D getBounds() {
-
-		return new Rectangle2D.Double(x, y, width, height);
-	}
-
-
-	
 	
 }
 
