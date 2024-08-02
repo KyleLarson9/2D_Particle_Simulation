@@ -2,6 +2,7 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
@@ -25,7 +26,7 @@ public class Projectile extends AppObject {
 	private boolean launched = false;
 	private boolean moving = false;
 	
-	private double vel = 200; // pixels/s
+	private double vel = 250; // pixels/s
 	private double xVel, yVel;
 	
 	private double GRAVITY = Constants.GRAVITY.getConstant();
@@ -66,11 +67,9 @@ public class Projectile extends AppObject {
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.black);
 		g2d.fill(new Rectangle2D.Double(x, y, width, height));
+		
+		g2d.setColor(Color.red);
 
-	}
-	
-	public Rectangle2D getBounds() {
-		return new Rectangle2D.Double(x, y, width, height);
 	}
 	
 	// private methods
@@ -81,24 +80,47 @@ public class Projectile extends AppObject {
 			AppObject tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ObjectId.Block) {
-				if(getBounds().intersects(tempObject.getBounds())) {
+				
+				// hit box is all sorts of fucked up
+				
+				if(getTopBounds().intersects(tempObject.getBounds())) {
+					y = tempObject.getY() + height;
+					yVel *=-1;
+				}
+				
+				if(getBottomBounds().intersects(tempObject.getBounds())) {
 					y = tempObject.getY() - height;
 					moving = false;
 				}
+				
+				if(getRightBounds().intersects(tempObject.getBounds())) {
+					x = tempObject.getX() - width;
+					xVel *= -1;
+				} 
+				
+				if(getLeftBounds().intersects(tempObject.getBounds())) {
+					x = tempObject.getX() + width;
+					xVel *= -1;
+				}
+				
+
 			}
 			
 		}
 		
 	}
 	
-	private void updateVectorPosition() {
-
+	private void updateVectorPosition() { // put this in vector class
+		
+		double middleX = x + (width/2);
+		double middleY = y + (height/2);
+		
 		if(!launched) { // get initial direction
-			Vector2D directionVector = new Vector2D(x + (width/2), y + (height/2), MouseInputs.getX(), MouseInputs.getY());
+			Vector2D directionVector = new Vector2D(middleX, middleY, MouseInputs.getX(), MouseInputs.getY());
 			directionVector = directionVector.normalize().multiplyByScalar(20);
 			setVector(vector, directionVector);
 		} else if(launched && moving) { // velocity vector
-			Vector2D velocityVector = new Vector2D(x + (width/2), y + (height/2), x + (width/2) + (xVel), y + (height/2) + (yVel));
+			Vector2D velocityVector = new Vector2D(middleX, middleY, middleX + (xVel), middleY + (yVel));
 			velocityVector = velocityVector.normalize().multiplyByScalar(20);
             setVector(vector, velocityVector);
         } else if(launched && !moving) {
@@ -115,6 +137,34 @@ public class Projectile extends AppObject {
 		vec1.y1 = vec2.y1;
 		vec1.x2 = vec2.x2;
 		vec1.y2 = vec2.y2;
+	}
+
+	// Override methods
+
+	@Override
+	public Rectangle2D getBounds() {
+	    return new Rectangle2D.Double(x, y, width, height);
+	}
+
+	// math for these are written down
+	@Override
+	public Rectangle2D getBottomBounds() {
+	    return new Rectangle2D.Double(x + (width/3), y + (height/2), width - (2*(width/3)), (height/2));
+	}
+
+	@Override
+	public Rectangle2D getTopBounds() {
+	    return new Rectangle2D.Double(x + (width/3), y, width - (2*(width/3)), (height/2));
+	}
+
+	@Override
+	public Rectangle2D getRightBounds() {
+	    return new Rectangle2D.Double(x + (width - (width/6)), y + (height/6), width/6, height - (2*(height/6)));
+	}
+
+	@Override
+	public Rectangle2D getLeftBounds() {
+	    return new Rectangle2D.Double(x, y + (height/6), width/6, height - (2*(height/6)));
 	}
 	
 }

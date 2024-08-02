@@ -67,15 +67,6 @@ public class App implements Runnable {
 		    vectorHandler.addVector(vector);
 		    newProjectile = new Projectile(startX, startY, 10, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newProjectile);
-
-		    if(newProjectile != null) {
-				for(int i = 0; i < handler.object.size(); i++) {
-					AppObject tempObject = handler.object.get(i);
-					if(tempObject.getId() == ObjectId.Projectile) {
-						//System.out.println("Projectile");						
-					}
-				}
-			}
 		    
 		    mouseInputs.resetClick(); 
 		}
@@ -90,7 +81,6 @@ public class App implements Runnable {
 		thread.start();
 	} 
 	 
-	
 	private void initializeClasses() {
 
 		handler = new Handler();

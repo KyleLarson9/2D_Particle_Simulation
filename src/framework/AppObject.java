@@ -41,8 +41,11 @@ public abstract class AppObject {
 	public abstract void update(LinkedList<AppObject> object);
 	public abstract void render(Graphics2D g2d);
 	public abstract Rectangle2D getBounds();
-
-
+	public abstract Rectangle2D getBottomBounds();
+	public abstract Rectangle2D getTopBounds();
+	public abstract Rectangle2D getRightBounds();
+	public abstract Rectangle2D getLeftBounds();
+	
 	public double getMass() {
 		return mass;
 	}
