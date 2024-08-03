@@ -77,7 +77,7 @@ public class Projectile extends AppObject {
 	private void collision(LinkedList<AppObject> object) {
 		
 		double coefficientOfRestitution = .5;
-		
+		double coefficientOfKineticFriction = .7;
 		// now add needs friction
 		
 		for(int i = 0; i < handler.object.size(); i++) {
@@ -93,6 +93,14 @@ public class Projectile extends AppObject {
 				if(getBottomBounds().intersects(tempObject.getBounds())) {
 					y = tempObject.getY() - height;
 					yVel *= -1 * coefficientOfRestitution;
+					
+					// just for testing -- not official
+					xVel *= coefficientOfKineticFriction;
+					
+					// the way it is calculating, it will just keep approaching 0
+					if(xVel == 0 && yVel == 0) 
+						moving = false;
+					
 				}
 				
 				if(getRightBounds().intersects(tempObject.getBounds())) {
