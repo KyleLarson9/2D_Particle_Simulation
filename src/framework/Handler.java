@@ -36,7 +36,8 @@ public class Handler {
 		this.object.remove(object);
 	}
 	
-	// create seperate class for this later
+	// create seperate class for this later and make it much better
+	// testing purposes
 	public void createLevel() {
 		for(int i = 0; i < App.APP_WIDTH + 8; i+=8) {
 			addObject(new Block(i, App.APP_HEIGHT/2 + 8, ObjectId.Block));			
@@ -50,7 +51,7 @@ public class Handler {
 			addObject(new Block(App.APP_WIDTH/2 - 150, i + 208, ObjectId.Block));		
 		}
 		
-		for(int i = 0; i < 64; i+=8) {
+		for(int i = 0; i < 48; i+=8) {
 			addObject(new Block(i, App.APP_HEIGHT/2 - 100, ObjectId.Block));
 		}
 	}

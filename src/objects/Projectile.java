@@ -76,36 +76,38 @@ public class Projectile extends AppObject {
 	
 	private void collision(LinkedList<AppObject> object) {
 		
+		double coefficientOfRestitution = .5;
+		
+		// now add needs friction
+		
 		for(int i = 0; i < handler.object.size(); i++) {
 			AppObject tempObject = handler.object.get(i);
 			
 			if(tempObject.getId() == ObjectId.Block) {
-				
-				// hit box is all sorts of fucked up
-				
+								
 				if(getTopBounds().intersects(tempObject.getBounds())) {
 					y = tempObject.getY() + height;
-					yVel *=-1;
+					yVel *=-1 * coefficientOfRestitution;
 				}
 				
 				if(getBottomBounds().intersects(tempObject.getBounds())) {
 					y = tempObject.getY() - height;
-					moving = false;
+					yVel *= -1 * coefficientOfRestitution;
 				}
 				
 				if(getRightBounds().intersects(tempObject.getBounds())) {
 					x = tempObject.getX() - width;
-					xVel *= -1;
+					xVel *= -1 * coefficientOfRestitution;
 				} 
 				
 				if(getLeftBounds().intersects(tempObject.getBounds())) {
 					x = tempObject.getX() + width;
-					xVel *= -1;
+					xVel *= -1 * coefficientOfRestitution;
 				}
 				
 
 			}
-			
+		 	
 		}
 		
 	}
