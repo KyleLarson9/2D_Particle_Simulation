@@ -32,7 +32,9 @@ public class Projectile extends AppObject {
 	private double GRAVITY = Constants.GRAVITY.getConstant();
 	
 	private float dt = .00833f; // 1 / FPS
-		
+	
+	private double lastXVel;
+	
 	public Projectile(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		super(x, y, mass, vector, id);
 		this.handler = handler;
@@ -75,42 +77,40 @@ public class Projectile extends AppObject {
 	// private methods
 	
 	private void collision(LinkedList<AppObject> object) {
-		
-		double coefficientOfRestitution = .5;
-		double coefficientOfKineticFriction = .7;
-		// now add needs friction
-		
+				
+		double coefficientOfRestitution = Constants.COEFFICIENT_RESTITUTION.getConstant();
+		double coefficientOfKineticFriction = Constants.COEFFICIENT_KINETIC_FRICTION.getConstant();
+		double velocityThreshold = 0.03; 
 		for(int i = 0; i < handler.object.size(); i++) {
-			AppObject tempObject = handler.object.get(i);
+			AppObject tempObject = handler.object.get(i);			
 			
 			if(tempObject.getId() == ObjectId.Block) {
-								
-				if(getTopBounds().intersects(tempObject.getBounds())) {
+				
+				Rectangle2D blockBounds = tempObject.getBounds();
+				
+				if(getTopBounds().intersects(blockBounds)) {
 					y = tempObject.getY() + height;
-					yVel *=-1 * coefficientOfRestitution;
+					yVel *= - coefficientOfRestitution;
 				}
 				
-				if(getBottomBounds().intersects(tempObject.getBounds())) {
+				if(getBottomBounds().intersects(blockBounds)) {
 					y = tempObject.getY() - height;
-					yVel *= -1 * coefficientOfRestitution;
+					yVel *= -coefficientOfRestitution;
 					
-					// just for testing -- not official
-					xVel *= coefficientOfKineticFriction;
-					
-					// the way it is calculating, it will just keep approaching 0
-					if(xVel == 0 && yVel == 0) 
-						moving = false;
+					if(Math.abs(yVel) < velocityThreshold) {
+					    moving = false;
+					}
 					
 				}
 				
-				if(getRightBounds().intersects(tempObject.getBounds())) {
+				if(getRightBounds().intersects(blockBounds)) {
 					x = tempObject.getX() - width;
-					xVel *= -1 * coefficientOfRestitution;
+					xVel *= - coefficientOfRestitution;
 				} 
 				
-				if(getLeftBounds().intersects(tempObject.getBounds())) {
+				if(getLeftBounds().intersects(blockBounds)) {
 					x = tempObject.getX() + width;
-					xVel *= -1 * coefficientOfRestitution;
+					xVel *= - coefficientOfRestitution;
 				}
 				
 
@@ -151,6 +151,7 @@ public class Projectile extends AppObject {
 
 	// Override methods
 
+	// can I just put these in the object class?
 	@Override
 	public Rectangle2D getBounds() {
 	    return new Rectangle2D.Double(x, y, width, height);
