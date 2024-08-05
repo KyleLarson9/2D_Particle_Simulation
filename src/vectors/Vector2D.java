@@ -6,6 +6,8 @@ import java.awt.geom.Line2D;
 import java.util.LinkedList;
 import java.util.Random;
 
+import inputs.MouseInputs;
+
 public class Vector2D {
 
 	private Random rand = new Random();
@@ -87,6 +89,39 @@ public class Vector2D {
 		double newY2 = y1 + magntiude * Math.sin(radian);
 		
 		return new Vector2D(x1, y1, newX2, newY2);
+	}
+	
+	public static Vector2D updateVectorPosition(Vector2D vector, double middleX, double middleY, double xVel, double yVel, boolean launched, boolean moving) {
+		if(!launched) { // get initial direction
+			Vector2D directionVector = new Vector2D(middleX, middleY, MouseInputs.getX(), MouseInputs.getY());
+			directionVector = directionVector.normalize().multiplyByScalar(20);
+			setVector(vector, directionVector);
+			
+			return directionVector;
+		} else if(launched && moving) { // velocity vector
+			Vector2D velocityVector = new Vector2D(middleX, middleY, middleX + (xVel), middleY + (yVel));
+			velocityVector = velocityVector.normalize().multiplyByScalar(20);
+            setVector(vector, velocityVector);
+            
+            return velocityVector;
+        } else if(launched && !moving) {
+			vector.x1 = 0;
+			vector.x2 = 0;
+			vector.y1 = 0;
+			vector.y2 = 0;
+			
+			return new Vector2D(vector.x1, vector.y1, vector.x2, vector.y2);
+		}
+		
+		return vector;
+		
+	}
+	
+	public static void setVector(Vector2D vec1, Vector2D vec2) {
+		vec1.x1 = vec2.x1;
+		vec1.y1 = vec2.y1;
+		vec1.x2 = vec2.x2;
+		vec1.y2 = vec2.y2;
 	}
 	
 	@Override

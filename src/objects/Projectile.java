@@ -32,11 +32,9 @@ public class Projectile extends AppObject {
 	private double GRAVITY = Constants.GRAVITY.getConstant();
 	
 	private float dt = .00833f; // 1 / FPS
-	
-	private double lastXVel;
-	
+		
 	public Projectile(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
-		super(x, y, mass, vector, id);
+		super(x, y, mass, vector, handler, id);
 		this.handler = handler;
 		
 	}
@@ -60,7 +58,11 @@ public class Projectile extends AppObject {
 			y+=ScaleUtils.metersToPixels(yVel) * dt;
 
 		}
-		updateVectorPosition();
+		
+		double middleX = x + (width/2);
+		double middleY = y + (height/2);
+		
+		Vector2D.updateVectorPosition(vector, middleX, middleY, xVel, yVel, launched, moving);
 
 		collision(object);
 		
@@ -75,15 +77,15 @@ public class Projectile extends AppObject {
 	}
 	
 	// private methods
-	
 	private void collision(LinkedList<AppObject> object) {
-				
+		
+		// come back to this ball wall collision logic later
+		// sometimes the ball will bounce back the wrong way -- won't reflect
 		double coefficientOfRestitution = Constants.COEFFICIENT_RESTITUTION.getConstant();
-		double coefficientOfKineticFriction = Constants.COEFFICIENT_KINETIC_FRICTION.getConstant();
 		double velocityThreshold = 0.03; 
 		for(int i = 0; i < handler.object.size(); i++) {
 			AppObject tempObject = handler.object.get(i);			
-			
+			                                                       
 			if(tempObject.getId() == ObjectId.Block) {
 				
 				Rectangle2D blockBounds = tempObject.getBounds();
@@ -103,7 +105,7 @@ public class Projectile extends AppObject {
 					
 				}
 				
-				if(getRightBounds().intersects(blockBounds)) {
+				if(getRightBounds().intersects(blockBounds)) {                                                              
 					x = tempObject.getX() - width;
 					xVel *= - coefficientOfRestitution;
 				} 
@@ -120,38 +122,8 @@ public class Projectile extends AppObject {
 		
 	}
 	
-	private void updateVectorPosition() { // put this in vector class
-		
-		double middleX = x + (width/2);
-		double middleY = y + (height/2);
-		
-		if(!launched) { // get initial direction
-			Vector2D directionVector = new Vector2D(middleX, middleY, MouseInputs.getX(), MouseInputs.getY());
-			directionVector = directionVector.normalize().multiplyByScalar(20);
-			setVector(vector, directionVector);
-		} else if(launched && moving) { // velocity vector
-			Vector2D velocityVector = new Vector2D(middleX, middleY, middleX + (xVel), middleY + (yVel));
-			velocityVector = velocityVector.normalize().multiplyByScalar(20);
-            setVector(vector, velocityVector);
-        } else if(launched && !moving) {
-			vector.x1 = 0;
-			vector.x2 = 0;
-			vector.y1 = 0;
-			vector.y2 = 0;
-		}
-		
-	}
-	
-	public void setVector(Vector2D vec1, Vector2D vec2) {
-		vec1.x1 = vec2.x1;
-		vec1.y1 = vec2.y1;
-		vec1.x2 = vec2.x2;
-		vec1.y2 = vec2.y2;
-	}
-
 	// Override methods
 
-	// can I just put these in the object class?
 	@Override
 	public Rectangle2D getBounds() {
 	    return new Rectangle2D.Double(x, y, width, height);
