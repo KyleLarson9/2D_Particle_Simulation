@@ -2,8 +2,8 @@ package states;
 
 public enum AppState {
 
-	SIMULATING, MENU;
+	SIMULATING, START_MENU, SIMULATION_SETTINGS_OVERLAY;
 	
-	public static AppState state = MENU;
+	public static AppState state = START_MENU;
 	
 }

@@ -7,6 +7,8 @@ import java.awt.event.MouseEvent;
 
 import main.App;
 
+// maybe add options for different simulations? -- gravitational orbits, projectile motion, fluids
+
 public class Menu extends State implements StateMethods {
 
 	public Menu(App app) {
@@ -21,7 +23,7 @@ public class Menu extends State implements StateMethods {
 	@Override
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.black);
-		g2d.drawString("MENU", App.APP_WIDTH/2, 200);
+		g2d.drawString("Press enter to enter simulation", App.APP_WIDTH/2, 200);
 	}
 
 	@Override

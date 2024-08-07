@@ -12,11 +12,16 @@ import objects.Projectile;
 import vectors.Vector2D;
 import vectors.VectorHandler;
 
+// add specific launch button instead of clicking 
+
 public class Simulating extends State implements StateMethods {
 
 	private Handler handler;
 	private VectorHandler vectorHandler;
 	private Projectile newProjectile;
+	
+	// states
+	private SimulationSettings simulationSettings;
 	
 	public static int x, y;
 	public static boolean clicked = false;
@@ -37,7 +42,7 @@ public class Simulating extends State implements StateMethods {
 	public void initializeClasses() {
 		handler = new Handler();
 		vectorHandler = new VectorHandler();
-
+		simulationSettings = new SimulationSettings();
 	}
 
 	@Override
@@ -66,7 +71,7 @@ public class Simulating extends State implements StateMethods {
 	public void render(Graphics2D g2d) {
 		vectorHandler.render(g2d);
 		handler.render(g2d);
-		
+		simulationSettings.render(g2d);
 	}
 
 	@Override
@@ -99,8 +104,8 @@ public class Simulating extends State implements StateMethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_M) 
-			AppState.state = AppState.MENU;
+//		if(e.getKeyCode() == KeyEvent.VK_M) 
+//			AppState.state = AppState.START_MENU;
 	}
 
 	public static int getX() {

@@ -15,13 +15,13 @@ public class KeyboardInputs implements KeyListener {
 
 	@Override 
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+
 	}
   
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch(AppState.state) {
-		case MENU:
+		case START_MENU:
 			appPanel.getApp().getMenu().keyReleased(e);
 			break;
 		case SIMULATING:
@@ -36,7 +36,7 @@ public class KeyboardInputs implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(AppState.state) {
-		case MENU:
+		case START_MENU:
 			appPanel.getApp().getMenu().keyPressed(e);
 			break;
 		case SIMULATING:
