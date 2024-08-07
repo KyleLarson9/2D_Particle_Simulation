@@ -13,6 +13,7 @@ import framework.ObjectId;
 import framework.ScaleUtils;
 import framework.SimulationObject;
 import inputs.MouseInputs;
+import main.Simulation;
 import states.Simulating;
 import vectors.Vector2D;
 
@@ -22,13 +23,13 @@ public class Projectile extends SimulationObject {
 	
 	private Handler handler;
 	
-	private final int width = 24;
-	private final int height = 24;
+	private final int width = (int) (12 * Simulation.SCALE);
+	private final int height = (int) (12 * Simulation.SCALE);
 
 	private boolean launched = false;
 	private boolean moving = false;
 	
-	private double vel = 200; // pixels/s
+	private double vel = 200 * Simulation.SCALE; // pixels/s
 	private double xVel, yVel;
 	
 	private double GRAVITY = Constants.GRAVITY.getConstant();

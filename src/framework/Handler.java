@@ -40,17 +40,20 @@ public class Handler {
 
 	
 	public void createBounds() {
-		for(int i = 0; i < Simulation.APP_WIDTH - 8; i+=8) 
+		
+		float blockSize = (8 * Simulation.SCALE);
+		
+		for(int i = 0; i < Simulation.APP_WIDTH - blockSize; i+=blockSize) 
 			addObject(new Block(i, 0, ObjectId.Block));
 		
-		for(int i = 0; i < Simulation.APP_WIDTH - 8; i+= 8) 
-			addObject(new Block(i, Simulation.APP_HEIGHT - 8, ObjectId.Block));
+		for(int i = 0; i < Simulation.APP_WIDTH - blockSize; i+= blockSize) 
+			addObject(new Block(i, Simulation.APP_HEIGHT - blockSize, ObjectId.Block));
 		
-		for(int i = 0; i < Simulation.APP_HEIGHT  - 8; i+=8)
+		for(int i = 0; i < Simulation.APP_HEIGHT  - blockSize; i+=blockSize)
 			addObject(new Block(0, i, ObjectId.Block));
 		
-		for(int i = 0; i < Simulation.APP_HEIGHT - 8; i+= 8)
-			addObject(new Block(Simulation.APP_WIDTH - 8, i, ObjectId.Block));
+		for(int i = 0; i < Simulation.APP_HEIGHT - blockSize; i+= blockSize)
+			addObject(new Block(Simulation.APP_WIDTH - blockSize, i, ObjectId.Block));
 	}
 	
 	

@@ -7,10 +7,11 @@ import java.util.LinkedList;
 
 import framework.ObjectId;
 import framework.SimulationObject;
+import main.Simulation;
 
 public class Block extends SimulationObject {
 
-	private double width = 8, height = 8;
+	public double width = 8 * Simulation.SCALE, height = 8 * Simulation.SCALE;
 	
 	public Block(double x, double y, ObjectId id) {
 		super(x, y, id);
