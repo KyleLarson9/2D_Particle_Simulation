@@ -5,10 +5,10 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
-import framework.AppObject;
 import framework.ObjectId;
+import framework.SimulationObject;
 
-public class Block extends AppObject {
+public class Block extends SimulationObject {
 
 	private double width = 8, height = 8;
 	
@@ -17,7 +17,7 @@ public class Block extends AppObject {
 	}
 
 	@Override
-	public void update(LinkedList<AppObject> object) {
+	public void update(LinkedList<SimulationObject> object) {
 		
 	}
 

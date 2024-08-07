@@ -2,15 +2,15 @@ package inputs;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import main.AppPanel;
-import states.AppState;
+import main.SimulationPanel;
+import states.SimulationState;
 
 public class KeyboardInputs implements KeyListener {
 
-	private AppPanel appPanel;
+	private SimulationPanel panel;
 
-	public KeyboardInputs(AppPanel appPanel) {
-		this.appPanel = appPanel;
+	public KeyboardInputs(SimulationPanel panel) {
+		this.panel = panel;
 	}
 
 	@Override 
@@ -20,12 +20,12 @@ public class KeyboardInputs implements KeyListener {
   
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch(AppState.state) {
+		switch(SimulationState.state) {
 		case START_MENU:
-			appPanel.getApp().getMenu().keyReleased(e);
+			panel.getSimulation().getMenu().keyReleased(e);
 			break;
 		case SIMULATING:
-			appPanel.getApp().getSimulating().keyReleased(e);
+			panel.getSimulation().getSimulating().keyReleased(e);
 			break;
 		default:
 			break;
@@ -35,12 +35,12 @@ public class KeyboardInputs implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		switch(AppState.state) {
+		switch(SimulationState.state) {
 		case START_MENU:
-			appPanel.getApp().getMenu().keyPressed(e);
+			panel.getSimulation().getMenu().keyPressed(e);
 			break;
 		case SIMULATING:
-			appPanel.getApp().getSimulating().keyPressed(e);
+			panel.getSimulation().getSimulating().keyPressed(e);
 			break;
 		default:
 			break;

@@ -1,17 +1,17 @@
 package states;
 
-import main.App;
+import main.Simulation;
 
 public class State { // super class
 	
-	protected App app;
+	protected Simulation simulation;
 	
-	public State(App app) {
-		this.app = app;
+	public State(Simulation simulation) {
+		this.simulation = simulation;
 	}
 	
-	public App getApp() {
-		return app;
+	public Simulation getApp() {
+		return simulation;
 	}
 
 }

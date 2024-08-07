@@ -7,18 +7,18 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
-import framework.AppObject;
 import framework.Constants;
 import framework.Handler;
 import framework.ObjectId;
 import framework.ScaleUtils;
+import framework.SimulationObject;
 import inputs.MouseInputs;
 import states.Simulating;
 import vectors.Vector2D;
 
 // add elastic collisions
 
-public class Projectile extends AppObject {
+public class Projectile extends SimulationObject {
 	
 	private Handler handler;
 	
@@ -43,7 +43,7 @@ public class Projectile extends AppObject {
 	
 	// public methods
 	
-	public void update(LinkedList<AppObject> object) {
+	public void update(LinkedList<SimulationObject> object) {
 				
 		
 		
@@ -57,7 +57,7 @@ public class Projectile extends AppObject {
 		} 
 		if(launched && moving) {
 			
-			yVel += 0 * dt;
+			yVel += GRAVITY * dt;
 			
 			x+=ScaleUtils.metersToPixels(xVel) * dt;
 			y+=ScaleUtils.metersToPixels(yVel) * dt;
@@ -82,14 +82,14 @@ public class Projectile extends AppObject {
 	}
 	
 	// private methods
-	private void collision(LinkedList<AppObject> object) {
+	private void collision(LinkedList<SimulationObject> object) {
 		
 		// come back to this ball wall collision logic later
 		// sometimes the ball will bounce back the wrong way -- won't reflect
 		double coefficientOfRestitution = Constants.COEFFICIENT_RESTITUTION.getConstant();
 		double velocityThreshold = 0.03; 
 		for(int i = 0; i < handler.object.size(); i++) {
-			AppObject tempObject = handler.object.get(i);			
+			SimulationObject tempObject = handler.object.get(i);			
 			                                                       
 			if(tempObject.getId() == ObjectId.Block) {
 				

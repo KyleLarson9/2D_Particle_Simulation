@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import framework.Handler;
 import framework.ObjectId;
 import inputs.MouseInputs;
-import main.App;
+import main.Simulation;
 import objects.Projectile;
 import vectors.Vector2D;
 import vectors.VectorHandler;
@@ -27,12 +27,12 @@ public class Simulating extends State implements StateMethods {
 	public static boolean clicked = false;
 	
 	double startX = 10;
-    double startY = App.APP_HEIGHT / 2.0;
+    double startY = Simulation.APP_HEIGHT / 2.0;
     double targetX = getX();
     double targetY = getY();
 	    
-	public Simulating(App app) {
-		super(app);
+	public Simulating(Simulation simulation) {
+		super(simulation);
 		initializeClasses();
 		
 		handler.createBounds();
@@ -52,7 +52,7 @@ public class Simulating extends State implements StateMethods {
 		if(clicked) {
 						
 			double startX = 10;
-		    double startY = App.APP_HEIGHT / 2.0;
+		    double startY = Simulation.APP_HEIGHT / 2.0;
 		    double targetX = getX();
 		    double targetY = getY();
 		    

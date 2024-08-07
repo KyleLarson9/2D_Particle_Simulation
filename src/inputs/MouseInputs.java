@@ -5,16 +5,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import main.App;
-import main.AppPanel;
-import states.AppState;
+import main.SimulationPanel;
+import states.SimulationState;
 
 public class MouseInputs extends MouseAdapter implements MouseListener, MouseMotionListener {
 
+	private SimulationPanel panel;
 	
-	private AppPanel panel;
-	
-	public MouseInputs(AppPanel panel) {
+	public MouseInputs(SimulationPanel panel) {
 		this.panel = panel;
 	}
 	
@@ -22,12 +20,12 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		switch(AppState.state) {
+		switch(SimulationState.state) {
 		case START_MENU:
-			panel.getApp().getMenu().mouseClicked(e);
+			panel.getSimulation().getMenu().mouseClicked(e);
 			break;
 		case SIMULATING:
-			panel.getApp().getSimulating().mouseClicked(e);
+			panel.getSimulation().getSimulating().mouseClicked(e);
 			break;
 		default:
 			break;
