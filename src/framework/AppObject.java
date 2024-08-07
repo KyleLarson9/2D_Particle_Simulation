@@ -13,8 +13,10 @@ public abstract class AppObject {
 	protected double x, y;
 	protected double velX = 0, velY = 0;
 	protected double mass;
+	protected double r;
 	protected Vector2D vector;
-
+	protected Handler handler;
+	
 	protected ObjectId id;
 	
 	// default
@@ -29,13 +31,25 @@ public abstract class AppObject {
 		this.id = id;
 	}
 	
+	// ball
+	public AppObject(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
+		this.x = x;
+		this.y = y;
+		this.r = r;
+		this.mass = mass;
+		this.vector = vector;
+		this.id = id;
+		this.handler = handler;
+	}
+
 	// projectile
-	public AppObject(double x, double y, double mass, Vector2D vector, ObjectId id) {
+	public AppObject(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.mass = mass;
 		this.vector = vector;
 		this.id = id;
+		this.handler = handler;
 	}
 	
 	public abstract void update(LinkedList<AppObject> object);
@@ -45,6 +59,14 @@ public abstract class AppObject {
 	public abstract Rectangle2D getTopBounds();
 	public abstract Rectangle2D getRightBounds();
 	public abstract Rectangle2D getLeftBounds();
+	
+	public double getR() {
+		return r;
+	}
+
+	public void setR(double r) {
+		this.r = r;
+	}
 	
 	public double getMass() {
 		return mass;

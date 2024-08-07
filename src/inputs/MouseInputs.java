@@ -6,32 +6,35 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import main.App;
+import main.AppPanel;
+import states.AppState;
 
 public class MouseInputs extends MouseAdapter implements MouseListener, MouseMotionListener {
 
-	public static int x, y;
-	public static boolean clicked = false;
-		
-	public MouseInputs() {
+	
+	private AppPanel panel;
+	
+	public MouseInputs(AppPanel panel) {
+		this.panel = panel;
 	}
 	
-	public static int getX() {
-		return x;
-	}
-	
-	public static int getY() {
-		return y;
-	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		clicked = true;
-		x = e.getX();
-		y = e.getY();
+		
+		switch(AppState.state) {
+		case MENU:
+			panel.getApp().getMenu().mouseClicked(e);
+			break;
+		case SIMULATING:
+			panel.getApp().getSimulating().mouseClicked(e);
+			break;
+		default:
+			break;
+		
+		}
+		
 	}
-	
-	public void resetClick() {
-		clicked = false;
-	}
+
 	
 }

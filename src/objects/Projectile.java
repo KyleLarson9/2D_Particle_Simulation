@@ -3,6 +3,7 @@ package objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
@@ -12,6 +13,7 @@ import framework.Handler;
 import framework.ObjectId;
 import framework.ScaleUtils;
 import inputs.MouseInputs;
+import states.Simulating;
 import vectors.Vector2D;
 
 // add elastic collisions
@@ -20,13 +22,13 @@ public class Projectile extends AppObject {
 	
 	private Handler handler;
 	
-	private final int width = 8;
-	private final int height = 8;
+	private final int width = 24;
+	private final int height = 24;
 
 	private boolean launched = false;
 	private boolean moving = false;
 	
-	private double vel = 250; // pixels/s
+	private double vel = 200; // pixels/s
 	private double xVel, yVel;
 	
 	private double GRAVITY = Constants.GRAVITY.getConstant();
@@ -43,16 +45,19 @@ public class Projectile extends AppObject {
 	
 	public void update(LinkedList<AppObject> object) {
 				
-		if(MouseInputs.clicked && !launched) {					
+		
+		
+		// might be a problem Simulating
+		if(Simulating.clicked && !launched) {					
 			launched = true;
 			moving = true;
-			double radians = vector.getMouseDirection(MouseInputs.getX(), MouseInputs.getY());
+			double radians = vector.getMouseDirection(Simulating.getX(), Simulating.getY());
  			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
 			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);			
 		} 
 		if(launched && moving) {
 			
-			yVel += GRAVITY * dt;
+			yVel += 0 * dt;
 			
 			x+=ScaleUtils.metersToPixels(xVel) * dt;
 			y+=ScaleUtils.metersToPixels(yVel) * dt;
@@ -62,7 +67,7 @@ public class Projectile extends AppObject {
 		double middleX = x + (width/2);
 		double middleY = y + (height/2);
 		
-		Vector2D.updateVectorPosition(vector, middleX, middleY, xVel, yVel, launched, moving);
+		Vector2D.updateVectorPositionToProjectile(vector, middleX, middleY, xVel, yVel, launched, moving);
 
 		collision(object);
 		
@@ -70,7 +75,7 @@ public class Projectile extends AppObject {
 	
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.black);
-		g2d.fill(new Rectangle2D.Double(x, y, width, height));
+		g2d.fill(new Ellipse2D.Double(x, y, width, height));
 		
 		g2d.setColor(Color.red);
 
@@ -91,7 +96,7 @@ public class Projectile extends AppObject {
 				Rectangle2D blockBounds = tempObject.getBounds();
 				
 				if(getTopBounds().intersects(blockBounds)) {
-					y = tempObject.getY() + height;
+					y = tempObject.getY() + blockBounds.getHeight();
 					yVel *= - coefficientOfRestitution;
 				}
 				
@@ -111,7 +116,7 @@ public class Projectile extends AppObject {
 				} 
 				
 				if(getLeftBounds().intersects(blockBounds)) {
-					x = tempObject.getX() + width;
+					x = tempObject.getX() + blockBounds.getWidth();
 					xVel *= - coefficientOfRestitution;
 				}
 				

@@ -7,15 +7,23 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import inputs.KeyboardInputs;
+import inputs.MouseInputs;
+
 public class AppPanel extends JPanel {
 
 	private App app;
 	private Dimension size;
+	public MouseInputs mouseInputs;
 	
 	public AppPanel(App app) {
 		this.app = app;
-		
+		mouseInputs = new MouseInputs(this);
+
 		setPanelSize();
+		addKeyListener(new KeyboardInputs(this));
+		addMouseListener(mouseInputs);
+		addMouseMotionListener(mouseInputs);
 		this.setBackground(Color.DARK_GRAY);
 	}
 	

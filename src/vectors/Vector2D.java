@@ -1,16 +1,9 @@
 package vectors;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
-import java.util.LinkedList;
-import java.util.Random;
-
 import inputs.MouseInputs;
+import states.Simulating;
 
 public class Vector2D {
-
-	private Random rand = new Random();
 	
 	public double x1, y1;
 	public double x2, y2;
@@ -91,9 +84,9 @@ public class Vector2D {
 		return new Vector2D(x1, y1, newX2, newY2);
 	}
 	
-	public static Vector2D updateVectorPosition(Vector2D vector, double middleX, double middleY, double xVel, double yVel, boolean launched, boolean moving) {
+	public static Vector2D updateVectorPositionToProjectile(Vector2D vector, double middleX, double middleY, double xVel, double yVel, boolean launched, boolean moving) {
 		if(!launched) { // get initial direction
-			Vector2D directionVector = new Vector2D(middleX, middleY, MouseInputs.getX(), MouseInputs.getY());
+			Vector2D directionVector = new Vector2D(middleX, middleY, Simulating.getX(), Simulating.getY()); // Simulating might be a problem
 			directionVector = directionVector.normalize().multiplyByScalar(20);
 			setVector(vector, directionVector);
 			

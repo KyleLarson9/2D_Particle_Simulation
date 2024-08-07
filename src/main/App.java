@@ -1,27 +1,23 @@
 package main;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
-import framework.AppObject;
 import framework.Handler;
-import framework.ObjectId;
-import inputs.MouseInputs;
-import objects.Projectile;
-import vectors.Vector2D;
-import vectors.VectorHandler;
+import states.AppState;
+import states.Menu;
+import states.Simulating;
 
 public class App implements Runnable {
 
 	private AppFrame frame;
-	protected AppPanel panel;
-	private MouseInputs mouseInputs;
-	private Handler handler;
-	private VectorHandler vectorHandler;
-	private Projectile newProjectile;
+	public AppPanel panel;
 	private Thread thread;
-	private boolean running = true;
+	private Handler handler;
 	
+	// states
+	private Simulating simulating;
+	private Menu menu;
+		
 	private final int FPS = 120;
 	private final int UPS = 200;
 	
@@ -33,11 +29,12 @@ public class App implements Runnable {
 	public final static int APP_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
 	public final static int APP_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 		
-	int updateCounter = 0;
-	
 	public App() {
 
 		initializeClasses();
+		
+		panel = new AppPanel(this);
+		frame = new AppFrame(panel);
 		panel.setFocusable(true);
 		panel.requestFocus();
 		
@@ -48,30 +45,32 @@ public class App implements Runnable {
 	// public methods
 	
 	public void render(Graphics2D g2d) {
-		vectorHandler.render(g2d);
-		handler.render(g2d);
+		
+		switch(AppState.state) {
+		case MENU:
+			menu.render(g2d);
+			break;
+		case SIMULATING:
+			simulating.render(g2d);
+			break;
+		default:
+			break;
+		}
 		
 	}
 	
 	public void update() {
-		handler.update();
-		
-		if(MouseInputs.clicked) {
-						
-			double startX = 10;
-		    double startY = APP_HEIGHT / 2.0;
-		    double targetX = MouseInputs.getX();
-		    double targetY = MouseInputs.getY();
-
-		    Vector2D vector = new Vector2D(startX, startY, targetX, targetY);
-		    vectorHandler.addVector(vector);
-		    newProjectile = new Projectile(startX, startY, 10, vector, handler, ObjectId.Projectile);
-		    handler.addObject(newProjectile);
-		    
-		    mouseInputs.resetClick(); 
+	
+		switch(AppState.state) {
+		case MENU:
+			menu.update();
+			break;
+		case SIMULATING:
+			simulating.update();
+			break;
+		default:
+			break;
 		}
-			
-		
 	}
 	
 	// private methods
@@ -83,61 +82,62 @@ public class App implements Runnable {
 	 
 	private void initializeClasses() {
 
-		handler = new Handler();
-		vectorHandler = new VectorHandler();
-		panel = new AppPanel(this);
-		frame = new AppFrame(panel);
-		mouseInputs = new MouseInputs();
-		
-		panel.addMouseListener(mouseInputs);  
-		panel.addMouseMotionListener(mouseInputs);
-
-		handler.createLevel();
+		simulating = new Simulating(this);
+		menu = new Menu(this);
+	
 		
 	}
-
-	// Override methods
 	
 	@Override
 	public void run() {
-		double timePerFrame = 1_000_000_000.0 / FPS; // how long each from will last, 1 second
-		double timePerUpdate = 1_000_000_000.0 / UPS;
-		
+
+		double timePerFrame = 1000000000.0 / FPS;
+		double timePerUpdate = 1000000000.0 / UPS;
+
 		long previousTime = System.nanoTime();
-			
+
 		int frames = 0;
 		int updates = 0;
 		long lastCheck = System.currentTimeMillis();
-		
+
 		double deltaU = 0;
 		double deltaF = 0;
-		
-		while(running) {
+
+		while (true) {
 			long currentTime = System.nanoTime();
-			 
+
 			deltaU += (currentTime - previousTime) / timePerUpdate;
 			deltaF += (currentTime - previousTime) / timePerFrame;
 			previousTime = currentTime;
-			
-			if(deltaU >= 1) {
+
+			if (deltaU >= 1) {
 				update();
 				updates++;
 				deltaU--;
 			}
-			
-			if(deltaF >= 1) {
+
+			if (deltaF >= 1) {
 				panel.repaint();
 				frames++;
 				deltaF--;
 			}
-			
-			if(System.currentTimeMillis() - lastCheck >= 1000) {
+
+			if (System.currentTimeMillis() - lastCheck >= 1000) {
 				lastCheck = System.currentTimeMillis();
 				frames = 0;
 				updates = 0;
-			}
 
-		}		
+			}
+		}
+
+	}
+	
+	public Menu getMenu() {
+		return menu;
+	}
+	
+	public Simulating getSimulating() {
+		return simulating;
 	}
 	
 }

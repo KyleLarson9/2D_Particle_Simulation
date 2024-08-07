@@ -3,7 +3,8 @@ package framework;
 public enum ObjectId {
 
 	Projectile(1),
-	Block(2);
+	Ball(2),
+	Block(3);
 	
 	private final int id;
 	
