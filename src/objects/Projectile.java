@@ -83,7 +83,7 @@ public class Projectile extends SimulationObject {
 	
 	private void toggleGravity() {
 		if(SimulationSettings.getGravityState() == true) 
-			GRAVITY = Constants.GRAVITY.getConstant();
+			GRAVITY = 9.81;
 		else if(SimulationSettings.getGravityState() == false)
 			GRAVITY = 0;
 	}
@@ -92,7 +92,7 @@ public class Projectile extends SimulationObject {
 		
 		// come back to this ball wall collision logic later
 		// sometimes the ball will bounce back the wrong way -- won't reflect
-		double coefficientOfRestitution = Constants.COEFFICIENT_RESTITUTION.getConstant();
+
 		double velocityThreshold = 0.03; 
 		for(int i = 0; i < handler.object.size(); i++) {
 			SimulationObject tempObject = handler.object.get(i);			
