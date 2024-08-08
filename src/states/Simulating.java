@@ -19,7 +19,7 @@ public class Simulating extends State implements StateMethods {
 	private Handler handler;
 	private VectorHandler vectorHandler;
 	private Projectile newProjectile;
-	
+	private Vector2D vector;
 	// states
 	private SimulationSettings simulationSettings;
 	
@@ -42,7 +42,7 @@ public class Simulating extends State implements StateMethods {
 	public void initializeClasses() {
 		handler = new Handler();
 		vectorHandler = new VectorHandler();
-		simulationSettings = new SimulationSettings();
+		simulationSettings = new SimulationSettings(simulation);
 	}
 
 	@Override
@@ -56,14 +56,14 @@ public class Simulating extends State implements StateMethods {
 		    double targetX = getX();
 		    double targetY = getY();
 		    
-		    Vector2D vector = new Vector2D(startX, startY, targetX, targetY);
+		    vector = new Vector2D(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
 		    newProjectile = new Projectile(startX, startY, 10, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newProjectile);
 		    
 		    resetClick(); 
 		} 
-		
+
 		
 	}
 
@@ -76,10 +76,25 @@ public class Simulating extends State implements StateMethods {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		clicked = true;
 		
+		clicked = true;
+
 		x = e.getX();
 		y = e.getY();
+		
+		// check if mouse is in bounds of the settings state - temporary
+		if(x > simulationSettings.getBackgroundX() && x < simulationSettings.getBackgroundX() + simulationSettings.getBackgroundWidth()
+		   && y > simulationSettings.getBackgroundY() && y < simulationSettings.getBackgroundY() + simulationSettings.getBackgroundHeight()) 
+			clicked = false;
+		
+		// ***********************FOR NOW***********************
+		// click check boxes
+		if(x > simulationSettings.gravityCheckbox.getX() && x < simulationSettings.gravityCheckbox.getX() + simulationSettings.gravityCheckbox.getWidth()
+		   && y > simulationSettings.gravityCheckbox.getY() && y < simulationSettings.gravityCheckbox.getY() + simulationSettings.gravityCheckbox.getHeight()) {
+			// check or uncheck
+			simulationSettings.gravityEnabled = !simulationSettings.gravityEnabled;
+		}
+		
 	}
 
 	@Override
@@ -98,14 +113,14 @@ public class Simulating extends State implements StateMethods {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(KeyEvent e) { 
 		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-//		if(e.getKeyCode() == KeyEvent.VK_M) 
-//			AppState.state = AppState.START_MENU;
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) 
+			SimulationState.state = SimulationState.START_MENU;
 	}
 
 	public static int getX() {

@@ -2,7 +2,6 @@ package objects;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
@@ -12,12 +11,11 @@ import framework.Handler;
 import framework.ObjectId;
 import framework.ScaleUtils;
 import framework.SimulationObject;
-import inputs.MouseInputs;
 import main.Simulation;
 import states.Simulating;
+import states.SimulationSettings;
 import vectors.Vector2D;
 
-// add elastic collisions
 
 public class Projectile extends SimulationObject {
 	
@@ -29,10 +27,10 @@ public class Projectile extends SimulationObject {
 	private boolean launched = false;
 	private boolean moving = false;
 	
-	private double vel = 200 * Simulation.SCALE; // pixels/s
+	private double vel = 100; // pixels/s
 	private double xVel, yVel;
 	
-	private double GRAVITY = Constants.GRAVITY.getConstant();
+	private double GRAVITY;
 	
 	private float dt = .00833f; // 1 / FPS
 		
@@ -46,9 +44,8 @@ public class Projectile extends SimulationObject {
 	
 	public void update(LinkedList<SimulationObject> object) {
 				
+		toggleGravity();
 		
-		
-		// might be a problem Simulating
 		if(Simulating.clicked && !launched) {					
 			launched = true;
 			moving = true;
@@ -60,15 +57,15 @@ public class Projectile extends SimulationObject {
 			
 			yVel += GRAVITY * dt;
 			
-			x+=ScaleUtils.metersToPixels(xVel) * dt;
-			y+=ScaleUtils.metersToPixels(yVel) * dt;
+			x+=ScaleUtils.metersToPixels(xVel) * dt * Simulation.SCALE;
+			y+=ScaleUtils.metersToPixels(yVel) * dt * Simulation.SCALE;
 
 		}
 		
 		double middleX = x + (width/2);
 		double middleY = y + (height/2);
 		
-		Vector2D.updateVectorPositionToProjectile(vector, middleX, middleY, xVel, yVel, launched, moving);
+		Vector2D.updateVectorPositionToParticle(vector, middleX, middleY, xVel, yVel, launched, moving);
 
 		collision(object);
 		
@@ -83,6 +80,14 @@ public class Projectile extends SimulationObject {
 	}
 	
 	// private methods
+	
+	private void toggleGravity() {
+		if(SimulationSettings.getGravityState() == true) 
+			GRAVITY = Constants.GRAVITY.getConstant();
+		else if(SimulationSettings.getGravityState() == false)
+			GRAVITY = 0;
+	}
+	
 	private void collision(LinkedList<SimulationObject> object) {
 		
 		// come back to this ball wall collision logic later
@@ -98,13 +103,12 @@ public class Projectile extends SimulationObject {
 				
 				if(getTopBounds().intersects(blockBounds)) {
 					y = tempObject.getY() + blockBounds.getHeight();
-					yVel *= - coefficientOfRestitution;
+					yVel *= - 1;
 				}
 				
 				if(getBottomBounds().intersects(blockBounds)) {
 					y = tempObject.getY() - height;
-					yVel *= -coefficientOfRestitution;
-					
+					yVel *= -1;
 					if(Math.abs(yVel) < velocityThreshold) {
 					    moving = false;
 					}
@@ -113,12 +117,12 @@ public class Projectile extends SimulationObject {
 				
 				if(getRightBounds().intersects(blockBounds)) {                                                              
 					x = tempObject.getX() - width;
-					xVel *= - coefficientOfRestitution;
+					xVel *= - 1;
 				} 
 				
 				if(getLeftBounds().intersects(blockBounds)) {
 					x = tempObject.getX() + blockBounds.getWidth();
-					xVel *= - coefficientOfRestitution;
+					xVel *= - 1;  
 				}
 				
 

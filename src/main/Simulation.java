@@ -3,6 +3,7 @@ package main;
 import java.awt.Graphics2D;
 import states.Menu;
 import states.Simulating;
+import states.SimulationSettings;
 import states.SimulationState;
 
 public class Simulation implements Runnable {
@@ -14,13 +15,14 @@ public class Simulation implements Runnable {
 	// states
 	private Simulating simulating;
 	private Menu menu;
-		
+	private SimulationSettings simulationSettings;
+	
 	private final int FPS = 120;
 	private final int UPS = 200;
 	
 	private final static int TILES_DEFAULT_SIZE = 32;
 	public  final static float SCALE = 2.0f;
-	private final static int TILES_IN_WIDTH = 26;
+	private final static int TILES_IN_WIDTH = 14;
 	private final static int TILES_IN_HEIGHT = 14;
 	private final static int TILES_SIZE = (int) (TILES_DEFAULT_SIZE * SCALE);
 	public final static int APP_WIDTH = TILES_SIZE * TILES_IN_WIDTH;

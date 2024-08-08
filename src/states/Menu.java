@@ -28,7 +28,7 @@ public class Menu extends State implements StateMethods {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		
 	}
 
 	@Override

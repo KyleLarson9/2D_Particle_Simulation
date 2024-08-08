@@ -1,6 +1,5 @@
 package vectors;
 
-import inputs.MouseInputs;
 import states.Simulating;
 
 public class Vector2D {
@@ -35,7 +34,7 @@ public class Vector2D {
 	
 	public double getDirection() {
 		double dx = x2 - x1;
-		double dy = y2 - y2;
+		double dy = y2 - y1;
 		
 		return Math.atan2(dy, dx);
 	}  
@@ -84,7 +83,7 @@ public class Vector2D {
 		return new Vector2D(x1, y1, newX2, newY2);
 	}
 	
-	public static Vector2D updateVectorPositionToProjectile(Vector2D vector, double middleX, double middleY, double xVel, double yVel, boolean launched, boolean moving) {
+	public static Vector2D updateVectorPositionToParticle(Vector2D vector, double middleX, double middleY, double xVel, double yVel, boolean launched, boolean moving) {
 		if(!launched) { // get initial direction
 			Vector2D directionVector = new Vector2D(middleX, middleY, Simulating.getX(), Simulating.getY()); // Simulating might be a problem
 			directionVector = directionVector.normalize().multiplyByScalar(20);
