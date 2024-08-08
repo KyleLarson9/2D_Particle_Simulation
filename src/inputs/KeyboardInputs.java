@@ -28,8 +28,7 @@ public class KeyboardInputs implements KeyListener {
 			panel.getSimulation().getSimulating().keyReleased(e);
 			break;
 		default:
-			break;
-		
+			break;	
 		}
 	} 
 
@@ -43,8 +42,7 @@ public class KeyboardInputs implements KeyListener {
 			panel.getSimulation().getSimulating().keyPressed(e);
 			break;
 		default:
-			break;
-		
+			break;	
 		}
 	}
 }

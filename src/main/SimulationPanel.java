@@ -37,10 +37,6 @@ public class SimulationPanel extends JPanel {
 		simulation.render(g2d);
 	}
 	
-	public Simulation getSimulation() {
-		return simulation;
-	}
-	
 	// private methods
 	
 	private void setPanelSize() {
@@ -48,6 +44,12 @@ public class SimulationPanel extends JPanel {
 		setMinimumSize(size);
 		setMaximumSize(size);
 		setPreferredSize(size);
+	}
+	
+	// getters
+	
+	public Simulation getSimulation() {
+		return simulation;
 	}
 	
 }

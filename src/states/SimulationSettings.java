@@ -25,7 +25,10 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	}
 	
+	// public methods
+	
 	public void update() {
+		
 	}
 	
 	public void render(Graphics2D g2d) {
@@ -36,7 +39,9 @@ public class SimulationSettings extends State implements StateMethods {
 		
 	}
 	
-	private void renderComponents(Graphics2D g2d) {
+	// private methods
+	
+	private void renderComponents(Graphics2D g2d) { // need to do this better
 		
 		// Gravity
 		if(gravityEnabled) g2d.setColor(Color.green);
@@ -60,10 +65,7 @@ public class SimulationSettings extends State implements StateMethods {
 		backgroundY = (int) (10 * Simulation.SCALE);
 	}
 	
-
-	public static boolean getGravityState() {
-		return gravityEnabled;
-	}
+	// override methods
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -72,34 +74,31 @@ public class SimulationSettings extends State implements StateMethods {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
+	// getters
+	
 	public int getBackgroundX() {
 		return backgroundX;
 	}
@@ -114,5 +113,9 @@ public class SimulationSettings extends State implements StateMethods {
 
 	public int getBackgroundHeight() {
 		return backgroundHeight;
+	}
+	
+	public static boolean getGravityState() {
+		return gravityEnabled;
 	}
 }

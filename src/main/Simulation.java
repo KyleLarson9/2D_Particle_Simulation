@@ -15,7 +15,6 @@ public class Simulation implements Runnable {
 	// states
 	private Simulating simulating;
 	private Menu menu;
-	private SimulationSettings simulationSettings;
 	
 	private final int FPS = 120;
 	private final int UPS = 200;
@@ -84,7 +83,6 @@ public class Simulation implements Runnable {
 		simulating = new Simulating(this);
 		menu = new Menu(this);
 	
-		
 	}
 	
 	@Override
@@ -130,6 +128,8 @@ public class Simulation implements Runnable {
 		}
 
 	}
+	
+	// getters
 	
 	public Menu getMenu() {
 		return menu;

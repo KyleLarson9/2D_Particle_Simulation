@@ -32,28 +32,4 @@ public class Block extends SimulationObject {
 		return new Rectangle2D.Double(x, y, width, height);
 	}
 
-	@Override
-	public Rectangle2D getBottomBounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Rectangle2D getTopBounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Rectangle2D getRightBounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Rectangle2D getLeftBounds() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

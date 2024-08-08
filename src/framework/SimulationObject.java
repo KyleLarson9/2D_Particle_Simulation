@@ -11,7 +11,6 @@ import vectors.Vector2D;
 public abstract class SimulationObject {
 
 	protected double x, y;
-	protected double velX = 0, velY = 0;
 	protected double mass;
 	protected double r;
 	protected Vector2D vector;
@@ -24,14 +23,14 @@ public abstract class SimulationObject {
 		
 	}
 	
-	// basic object
+	// block
 	public SimulationObject(double x, double y, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.id = id;
 	}
 	
-	// ball
+	// projectile
 	public SimulationObject(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		this.x = x;
 		this.y = y;
@@ -42,23 +41,9 @@ public abstract class SimulationObject {
 		this.handler = handler;
 	}
 
-	// projectile
-	public SimulationObject(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
-		this.x = x;
-		this.y = y;
-		this.mass = mass;
-		this.vector = vector;
-		this.id = id;
-		this.handler = handler;
-	}
-	
 	public abstract void update(LinkedList<SimulationObject> object);
 	public abstract void render(Graphics2D g2d);
 	public abstract Rectangle2D getBounds();
-	public abstract Rectangle2D getBottomBounds();
-	public abstract Rectangle2D getTopBounds();
-	public abstract Rectangle2D getRightBounds();
-	public abstract Rectangle2D getLeftBounds();
 	
 	public double getR() {
 		return r;
@@ -98,22 +83,6 @@ public abstract class SimulationObject {
 	
 	public void setY(double y) {
 		this.y = y;
-	}
-	
-	public double getVelX() {
-		return velX;
-	}
-	
-	public double getVelY() {
-		return velY;
-	}
-	
-	public void setVelX(float velX) {
-		this.velX = velX;
-	}
-	
-	public void setVelY(float velY) {
-		this.velY = velY;
 	}
 	
 	public ObjectId getId() {

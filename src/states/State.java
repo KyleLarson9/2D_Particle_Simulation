@@ -2,7 +2,7 @@ package states;
 
 import main.Simulation;
 
-public class State { // super class
+public class State { // super class for all states
 	
 	protected Simulation simulation;
 	

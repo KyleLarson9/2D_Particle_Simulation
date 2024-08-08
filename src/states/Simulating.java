@@ -12,24 +12,18 @@ import objects.Projectile;
 import vectors.Vector2D;
 import vectors.VectorHandler;
 
-// add specific launch button instead of clicking 
-
 public class Simulating extends State implements StateMethods {
 
 	private Handler handler;
 	private VectorHandler vectorHandler;
 	private Projectile newProjectile;
 	private Vector2D vector;
+	
 	// states
 	private SimulationSettings simulationSettings;
 	
 	public static int x, y;
 	public static boolean clicked = false;
-	
-	double startX = 10;
-    double startY = Simulation.APP_HEIGHT / 2.0;
-    double targetX = getX();
-    double targetY = getY();
 	    
 	public Simulating(Simulation simulation) {
 		super(simulation);
@@ -58,7 +52,7 @@ public class Simulating extends State implements StateMethods {
 		    
 		    vector = new Vector2D(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
-		    newProjectile = new Projectile(startX, startY, 10, vector, handler, ObjectId.Projectile);
+		    newProjectile = new Projectile(startX, startY, 12 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newProjectile);
 		    
 		    resetClick(); 

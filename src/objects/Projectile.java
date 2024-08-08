@@ -6,7 +6,6 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
-import framework.Constants;
 import framework.Handler;
 import framework.ObjectId;
 import framework.ScaleUtils;
@@ -20,13 +19,10 @@ import vectors.Vector2D;
 public class Projectile extends SimulationObject {
 	
 	private Handler handler;
-	
-	private final int width = (int) (12 * Simulation.SCALE);
-	private final int height = (int) (12 * Simulation.SCALE);
-
+		
 	private boolean launched = false;
 	private boolean moving = false;
-	
+	private double r;
 	private double vel = 100; // pixels/s
 	private double xVel, yVel;
 	
@@ -34,10 +30,10 @@ public class Projectile extends SimulationObject {
 	
 	private float dt = .00833f; // 1 / FPS
 		
-	public Projectile(double x, double y, double mass, Vector2D vector, Handler handler, ObjectId id) {
-		super(x, y, mass, vector, handler, id);
+	public Projectile(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
+		super(x, y, mass, r, vector, handler, id);
 		this.handler = handler;
-		
+		this.r = r;
 	}
 	
 	// public methods
@@ -62,8 +58,8 @@ public class Projectile extends SimulationObject {
 
 		}
 		
-		double middleX = x + (width/2);
-		double middleY = y + (height/2);
+		double middleX = x + (r/2);
+		double middleY = y + (r/2);
 		
 		Vector2D.updateVectorPositionToParticle(vector, middleX, middleY, xVel, yVel, launched, moving);
 
@@ -73,7 +69,7 @@ public class Projectile extends SimulationObject {
 	
 	public void render(Graphics2D g2d) {
 		g2d.setColor(Color.black);
-		g2d.fill(new Ellipse2D.Double(x, y, width, height));
+		g2d.fill(new Ellipse2D.Double(x, y, r, r));
 		
 		g2d.setColor(Color.red);
 
@@ -90,9 +86,7 @@ public class Projectile extends SimulationObject {
 	
 	private void collision(LinkedList<SimulationObject> object) {
 		
-		// come back to this ball wall collision logic later
-		// sometimes the ball will bounce back the wrong way -- won't reflect
-
+		// needs improvement
 		double velocityThreshold = 0.03; 
 		for(int i = 0; i < handler.object.size(); i++) {
 			SimulationObject tempObject = handler.object.get(i);			
@@ -107,7 +101,7 @@ public class Projectile extends SimulationObject {
 				}
 				
 				if(getBottomBounds().intersects(blockBounds)) {
-					y = tempObject.getY() - height;
+					y = tempObject.getY() - r;
 					yVel *= -1;
 					if(Math.abs(yVel) < velocityThreshold) {
 					    moving = false;
@@ -116,7 +110,7 @@ public class Projectile extends SimulationObject {
 				}
 				
 				if(getRightBounds().intersects(blockBounds)) {                                                              
-					x = tempObject.getX() - width;
+					x = tempObject.getX() - r;
 					xVel *= - 1;
 				} 
 				
@@ -136,28 +130,26 @@ public class Projectile extends SimulationObject {
 
 	@Override
 	public Rectangle2D getBounds() {
-	    return new Rectangle2D.Double(x, y, width, height);
+	    return new Rectangle2D.Double(x, y, r, r);
 	}
-
+	
+	// getters
+	
 	// math for these are written down
-	@Override
 	public Rectangle2D getBottomBounds() {
-	    return new Rectangle2D.Double(x + (width/3), y + (height/2), width - (2*(width/3)), (height/2));
+		return new Rectangle2D.Double(x + (r/3), y + (r/2), r - (2*(r/3)), (r/2));
 	}
 
-	@Override
 	public Rectangle2D getTopBounds() {
-	    return new Rectangle2D.Double(x + (width/3), y, width - (2*(width/3)), (height/2));
+		return new Rectangle2D.Double(x + (r/3), y, r - (2*(r/3)), (r/2));
 	}
 
-	@Override
 	public Rectangle2D getRightBounds() {
-	    return new Rectangle2D.Double(x + (width - (width/6)), y + (height/6), width/6, height - (2*(height/6)));
+		return new Rectangle2D.Double(x + (r - (r/6)), y + (r/6), r/6, r - (2*(r/6)));
 	}
 
-	@Override
 	public Rectangle2D getLeftBounds() {
-	    return new Rectangle2D.Double(x, y + (height/6), width/6, height - (2*(height/6)));
+		return new Rectangle2D.Double(x, y + (r/6), r/6, r - (2*(r/6)));
 	}
 	
 }

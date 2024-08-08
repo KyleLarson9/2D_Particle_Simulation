@@ -41,7 +41,7 @@ public class Handler {
 	
 	public void createBounds() {
 		
-		float blockSize = (8 * Simulation.SCALE);
+		int blockSize = (int) (8 * Simulation.SCALE);
 		
 		for(int i = 0; i < Simulation.APP_WIDTH - blockSize; i+=blockSize) 
 			addObject(new Block(i, 0, ObjectId.Block));
