@@ -12,6 +12,7 @@ import framework.ScaleUtils;
 import framework.SimulationObject;
 import main.Simulation;
 import states.Simulating;
+import states.SimulationConfig;
 import states.SimulationSettings;
 import vectors.Vector2D;
 
@@ -26,7 +27,7 @@ public class Projectile extends SimulationObject {
 	private double vel = 100; // pixels/s
 	private double xVel, yVel;
 	
-	private double GRAVITY;
+	private double gravity;
 	
 	private float dt = .00833f; // 1 / FPS
 		
@@ -51,7 +52,7 @@ public class Projectile extends SimulationObject {
 		} 
 		if(launched && moving) {
 			
-			yVel += GRAVITY * dt;
+			yVel += gravity * dt;
 			
 			x+=ScaleUtils.metersToPixels(xVel) * dt * Simulation.SCALE;
 			y+=ScaleUtils.metersToPixels(yVel) * dt * Simulation.SCALE;
@@ -79,9 +80,9 @@ public class Projectile extends SimulationObject {
 	
 	private void toggleGravity() {
 		if(SimulationSettings.getGravityState() == true) 
-			GRAVITY = SimulationSettings.userSetGravity;
+			gravity = SimulationConfig.getGravity();
 		else if(SimulationSettings.getGravityState() == false)
-			GRAVITY = 0;
+			gravity = 0;
 	}
 	
 	private void collision(LinkedList<SimulationObject> object) {

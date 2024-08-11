@@ -100,11 +100,6 @@ public class Simulating extends State implements StateMethods {
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) { 
-		
-	}
-
-	@Override
 	public void keyPressed(KeyEvent e) {
 		
 		if (simulationSettings.gravityTextBoxActive) {
@@ -114,12 +109,11 @@ public class Simulating extends State implements StateMethods {
             	simulationSettings.gravityInput = simulationSettings.gravityInput.substring(0, simulationSettings.gravityInput.length() - 1); // handle backspace
             } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 // On Enter, set the gravity value and deactivate the text box
-                try {
-                	simulationSettings.userSetGravity = Double.parseDouble(simulationSettings.gravityInput);
-                	simulationSettings.gravityValue = simulationSettings.gravityInput;
+                try {            	
+                	double newGravity = Double.parseDouble(simulationSettings.gravityInput);
+                	SimulationConfig.setGravity(newGravity);
                 } catch (NumberFormatException ex) {
                     // handle invalid input
-                	simulationSettings.gravityInput = Double.toString(simulationSettings.userSetGravity); // revert to last valid value
                 }
                 simulationSettings.gravityTextBoxActive = false;
             }
@@ -127,6 +121,12 @@ public class Simulating extends State implements StateMethods {
 		
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) 
 			SimulationState.state = SimulationState.START_MENU;
+	}
+
+	
+	@Override
+	public void keyReleased(KeyEvent e) { 
+		
 	}
 
 	public static int getX() {
