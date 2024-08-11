@@ -19,10 +19,8 @@ public class SimulationSettings extends State implements StateMethods {
 	// initial settings
 	public boolean coeffRestitutionEnabled = false;
 	
-	public static double userSetGravity = 9.81;
-	public String gravityValue = Double.toString(userSetGravity);
 	public boolean gravityTextBoxActive = false;
-	public String gravityInput = "";
+	public String gravityInput = Double.toString(SimulationConfig.getGravity());
 	
 	public SimulationSettings(Simulation simulation) {
 		super(simulation);
@@ -33,8 +31,7 @@ public class SimulationSettings extends State implements StateMethods {
 	// public methods
 	
 	public void update() {
-		if(gravityTextBoxActive) 
-			gravityValue = gravityInput;
+		
 	}
 	
 	public void render(Graphics2D g2d) {

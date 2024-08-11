@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Graphics2D;
 import states.Simulating;
-import states.SimulationSettings;
 import states.SimulationState;
 
 public class Simulation implements Runnable {

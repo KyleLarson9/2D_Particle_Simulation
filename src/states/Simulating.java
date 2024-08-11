@@ -107,13 +107,8 @@ public class Simulating extends State implements StateMethods {
             } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && simulationSettings.gravityInput.length() > 0) {
             	simulationSettings.gravityInput = simulationSettings.gravityInput.substring(0, simulationSettings.gravityInput.length() - 1); // handle backspace
             } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                // On Enter, set the gravity value and deactivate the text box
-                try {            	
-                	double newGravity = Double.parseDouble(simulationSettings.gravityInput);
-                	SimulationConfig.setGravity(newGravity);
-                } catch (NumberFormatException ex) {
-                    // handle invalid input
-                }
+            	double newGravity = Double.parseDouble(simulationSettings.gravityInput);
+            	SimulationConfig.setGravity(newGravity);
                 simulationSettings.gravityTextBoxActive = false;
             }
         }

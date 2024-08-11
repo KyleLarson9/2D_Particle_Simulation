@@ -12,6 +12,8 @@ import inputs.MouseInputs;
 
 public class SimulationPanel extends JPanel {
 
+	private static final long serialVersionUID = -5275150324825132510L;
+	
 	private Simulation simulation;
 	private Dimension size;
 	public MouseInputs mouseInputs;
