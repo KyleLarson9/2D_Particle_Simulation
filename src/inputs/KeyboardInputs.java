@@ -21,9 +21,6 @@ public class KeyboardInputs implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		switch(SimulationState.state) {
-		case START_MENU:
-			panel.getSimulation().getMenu().keyReleased(e);
-			break;
 		case SIMULATING:
 			panel.getSimulation().getSimulating().keyReleased(e);
 			break;
@@ -35,9 +32,7 @@ public class KeyboardInputs implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(SimulationState.state) {
-		case START_MENU:
-			panel.getSimulation().getMenu().keyPressed(e);
-			break;
+
 		case SIMULATING:
 			panel.getSimulation().getSimulating().keyPressed(e);
 			break;

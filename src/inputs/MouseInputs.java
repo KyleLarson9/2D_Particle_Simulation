@@ -21,9 +21,6 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 	public void mouseClicked(MouseEvent e) {
 		
 		switch(SimulationState.state) {
-		case START_MENU:
-			panel.getSimulation().getMenu().mouseClicked(e);
-			break;
 		case SIMULATING:
 			panel.getSimulation().getSimulating().mouseClicked(e);
 			break;		

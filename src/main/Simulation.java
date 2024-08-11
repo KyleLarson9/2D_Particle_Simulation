@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Graphics2D;
-import states.Menu;
 import states.Simulating;
 import states.SimulationSettings;
 import states.SimulationState;
@@ -14,7 +13,6 @@ public class Simulation implements Runnable {
 	
 	// states
 	private Simulating simulating;
-	private Menu menu;
 	
 	private final int FPS = 120;
 	private final int UPS = 200;
@@ -45,9 +43,6 @@ public class Simulation implements Runnable {
 	public void render(Graphics2D g2d) {
 		
 		switch(SimulationState.state) {
-		case START_MENU:
-			menu.render(g2d);
-			break;
 		case SIMULATING:
 			simulating.render(g2d);
 			break;
@@ -60,9 +55,6 @@ public class Simulation implements Runnable {
 	public void update() {
 	
 		switch(SimulationState.state) {
-		case START_MENU:
-			menu.update();
-			break;
 		case SIMULATING:
 			simulating.update();
 			break;
@@ -81,7 +73,6 @@ public class Simulation implements Runnable {
 	private void initializeClasses() {
 
 		simulating = new Simulating(this);
-		menu = new Menu(this);
 	
 	}
 	
@@ -130,10 +121,6 @@ public class Simulation implements Runnable {
 	}
 	
 	// getters
-	
-	public Menu getMenu() {
-		return menu;
-	}
 	
 	public Simulating getSimulating() {
 		return simulating;
