@@ -32,21 +32,6 @@ public class Menu extends State implements StateMethods {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		
-	}
-
-	@Override
 	public void keyReleased(KeyEvent e) {
 		
 	}

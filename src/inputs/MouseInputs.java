@@ -27,6 +27,9 @@ public class MouseInputs extends MouseAdapter implements MouseListener, MouseMot
 		case SIMULATING:
 			panel.getSimulation().getSimulating().mouseClicked(e);
 			break;		
+		case SIMULATION_SETTINGS_OVERLAY:
+			panel.getSimulation().getSimulating().getSimulationSettings().mouseClicked(e);
+			break;
 		default:
 			break;
 		

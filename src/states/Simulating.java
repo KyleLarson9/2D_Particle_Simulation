@@ -86,24 +86,17 @@ public class Simulating extends State implements StateMethods {
 		if(x > simulationSettings.gravityCheckbox.getX() && x < simulationSettings.gravityCheckbox.getX() + simulationSettings.gravityCheckbox.getWidth()
 		   && y > simulationSettings.gravityCheckbox.getY() && y < simulationSettings.gravityCheckbox.getY() + simulationSettings.gravityCheckbox.getHeight()) {
 			// check or uncheck
-			simulationSettings.gravityEnabled = !simulationSettings.gravityEnabled;
+			SimulationSettings.gravityEnabled = !SimulationSettings.gravityEnabled;
 		}
 		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		
+		// check if mouse is in the gravity check box		
+		if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
+		   && y > simulationSettings.gravityTextBox.getY() && y < simulationSettings.gravityTextBox.getY() + simulationSettings.gravityTextBox.getHeight()) {
+			simulationSettings.gravityTextBoxActive = true;
+			simulationSettings.gravityInput = ""; // clear
+		} else {
+			simulationSettings.gravityTextBoxActive = false;
+		}
 	}
 
 	@Override
@@ -113,6 +106,25 @@ public class Simulating extends State implements StateMethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		
+		if (simulationSettings.gravityTextBoxActive) {
+            if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '.') {
+            	simulationSettings.gravityInput += e.getKeyChar(); // append character to input
+            } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && simulationSettings.gravityInput.length() > 0) {
+            	simulationSettings.gravityInput = simulationSettings.gravityInput.substring(0, simulationSettings.gravityInput.length() - 1); // handle backspace
+            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                // On Enter, set the gravity value and deactivate the text box
+                try {
+                	simulationSettings.userSetGravity = Double.parseDouble(simulationSettings.gravityInput);
+                	simulationSettings.gravityValue = simulationSettings.gravityInput;
+                } catch (NumberFormatException ex) {
+                    // handle invalid input
+                	simulationSettings.gravityInput = Double.toString(simulationSettings.userSetGravity); // revert to last valid value
+                }
+                simulationSettings.gravityTextBoxActive = false;
+            }
+        }
+		
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) 
 			SimulationState.state = SimulationState.START_MENU;
 	}
@@ -126,5 +138,9 @@ public class Simulating extends State implements StateMethods {
 	}
 	public void resetClick() {
 	clicked = false;
+	}
+	
+	public SimulationSettings getSimulationSettings() {
+		return simulationSettings;
 	}
 }

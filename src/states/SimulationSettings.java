@@ -1,6 +1,7 @@
 package states;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -13,22 +14,28 @@ public class SimulationSettings extends State implements StateMethods {
 	private int backgroundX, backgroundY, backgroundWidth, backgroundHeight;
 	
 	public Rectangle gravityCheckbox;
-	public Rectangle coeffRestitutionCheckbox;
+	public Rectangle gravityTextBox;
 	
 	// initial settings
 	public static boolean gravityEnabled = true;
 	public boolean coeffRestitutionEnabled = false;
 	
+	public static double userSetGravity = 9.81;
+	public String gravityValue = Double.toString(userSetGravity);
+	public boolean gravityTextBoxActive = false;
+	public String gravityInput = "";
+	
 	public SimulationSettings(Simulation simulation) {
 		super(simulation);
 		loadBackground();
-	
+
 	}
 	
 	// public methods
 	
 	public void update() {
-		
+		if(gravityTextBoxActive) 
+			gravityValue = gravityInput;
 	}
 	
 	public void render(Graphics2D g2d) {
@@ -47,15 +54,21 @@ public class SimulationSettings extends State implements StateMethods {
 		if(gravityEnabled) g2d.setColor(Color.green);
 		else g2d.setColor(Color.red);
 			
-		gravityCheckbox = new Rectangle(backgroundX + 20, backgroundY + 20, 10, 10);
+		gravityCheckbox = new Rectangle((int) (backgroundX + (10 * Simulation.SCALE)) , (int) (backgroundY + (10 * Simulation.SCALE)), (int) (5 * Simulation.SCALE), (int) (5 * Simulation.SCALE));
 		g2d.fill(gravityCheckbox);
-				
-		// Coefficient of Restitution
-		if(coeffRestitutionEnabled) g2d.setColor(Color.green);
-		else g2d.setColor(Color.red);
 		
-		coeffRestitutionCheckbox = new Rectangle(backgroundX + 20, backgroundY + 40, 10, 10);
-		g2d.fill(coeffRestitutionCheckbox);
+		// text box to change gravity amount
+		gravityTextBox = new Rectangle((int) (backgroundX + (46.5 * Simulation.SCALE)), (int) (backgroundY + (9 * Simulation.SCALE)), (int) (13.5 * Simulation.SCALE), (int) (6 * Simulation.SCALE));
+		g2d.setColor(Color.black);
+		g2d.drawRect((int) (backgroundX + (46 * Simulation.SCALE)), (int) (backgroundY + (8.5 * Simulation.SCALE)), (int) (14 * Simulation.SCALE), (int) (6.5 * Simulation.SCALE));
+		g2d.setColor(Color.white);
+		g2d.fill(gravityTextBox);
+		
+		g2d.setColor(Color.black);
+        Font font = new Font("Serif", Font.BOLD, (int) (7 * Simulation.SCALE));
+        g2d.setFont(font);
+		g2d.drawString("Gravity: " + gravityInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (14.5 * Simulation.SCALE)));
+
 	}
 	
 	private void loadBackground() {
@@ -69,22 +82,7 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-			
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		
+				
 	}
 
 	@Override
@@ -94,7 +92,7 @@ public class SimulationSettings extends State implements StateMethods {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
+	
 	}
 
 	// getters
