@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 
 import framework.Handler;
 import framework.ObjectId;
-import inputs.MouseInputs;
 import main.Simulation;
 import objects.Projectile;
 import vectors.Vector2D;
@@ -86,7 +85,7 @@ public class Simulating extends State implements StateMethods {
 		if(x > simulationSettings.gravityCheckbox.getX() && x < simulationSettings.gravityCheckbox.getX() + simulationSettings.gravityCheckbox.getWidth()
 		   && y > simulationSettings.gravityCheckbox.getY() && y < simulationSettings.gravityCheckbox.getY() + simulationSettings.gravityCheckbox.getHeight()) {
 			// check or uncheck
-			SimulationSettings.gravityEnabled = !SimulationSettings.gravityEnabled;
+			SimulationConfig.setGravityEnabled(!SimulationConfig.isGravityEnabled());
 		}
 		
 		// check if mouse is in the gravity check box		
@@ -119,8 +118,6 @@ public class Simulating extends State implements StateMethods {
             }
         }
 		
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) 
-			SimulationState.state = SimulationState.START_MENU;
 	}
 
 	
@@ -136,8 +133,9 @@ public class Simulating extends State implements StateMethods {
 	public static int getY() {
 		return y;
 	}
+	
 	public void resetClick() {
-	clicked = false;
+		clicked = false;
 	}
 	
 	public SimulationSettings getSimulationSettings() {

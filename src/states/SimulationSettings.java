@@ -17,7 +17,6 @@ public class SimulationSettings extends State implements StateMethods {
 	public Rectangle gravityTextBox;
 	
 	// initial settings
-	public static boolean gravityEnabled = true;
 	public boolean coeffRestitutionEnabled = false;
 	
 	public static double userSetGravity = 9.81;
@@ -51,7 +50,7 @@ public class SimulationSettings extends State implements StateMethods {
 	private void renderComponents(Graphics2D g2d) { // need to do this better
 		
 		// Gravity
-		if(gravityEnabled) g2d.setColor(Color.green);
+		if(SimulationConfig.isGravityEnabled()) g2d.setColor(Color.green);
 		else g2d.setColor(Color.red);
 			
 		gravityCheckbox = new Rectangle((int) (backgroundX + (10 * Simulation.SCALE)) , (int) (backgroundY + (10 * Simulation.SCALE)), (int) (5 * Simulation.SCALE), (int) (5 * Simulation.SCALE));
@@ -113,7 +112,4 @@ public class SimulationSettings extends State implements StateMethods {
 		return backgroundHeight;
 	}
 	
-	public static boolean getGravityState() {
-		return gravityEnabled;
-	}
 }

@@ -79,9 +79,9 @@ public class Projectile extends SimulationObject {
 	// private methods
 	
 	private void toggleGravity() {
-		if(SimulationSettings.getGravityState() == true) 
+		if(SimulationConfig.isGravityEnabled()) 
 			gravity = SimulationConfig.getGravity();
-		else if(SimulationSettings.getGravityState() == false)
+		else if(SimulationConfig.isGravityEnabled() == false)
 			gravity = 0;
 	}
 	
