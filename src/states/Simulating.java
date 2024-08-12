@@ -45,7 +45,7 @@ public class Simulating extends State implements StateMethods {
 		// create new projectile object
 		if(clicked) { 
 						
-			double startX = 10;
+			double startX = 20;
 		    double startY = Simulation.APP_HEIGHT / 2.0;
 		    double targetX = getX();
 		    double targetY = getY();
@@ -90,7 +90,7 @@ public class Simulating extends State implements StateMethods {
 		}
 		
 		// check if mouse is in the gravity check box		
-		if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
+		else if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
 		   && y > simulationSettings.gravityTextBox.getY() && y < simulationSettings.gravityTextBox.getY() + simulationSettings.gravityTextBox.getHeight()) {
 			simulationSettings.gravityTextBoxActive = true;
 			simulationSettings.gravityInput = ""; // clear
@@ -104,7 +104,7 @@ public class Simulating extends State implements StateMethods {
 			SimulationConfig.setCoeffRestitution(!SimulationConfig.isCoeffRestitutionEnabled());
 		}
 		
-		if(x > simulationSettings.coeffRestitutionTextbox.getX() && x < simulationSettings.coeffRestitutionTextbox.getX() + simulationSettings.coeffRestitutionTextbox.getWidth() 
+		else if(x > simulationSettings.coeffRestitutionTextbox.getX() && x < simulationSettings.coeffRestitutionTextbox.getX() + simulationSettings.coeffRestitutionTextbox.getWidth() 
 		   && y > simulationSettings.coeffRestitutionTextbox.getY() && y < simulationSettings.coeffRestitutionTextbox.getY() + simulationSettings.coeffRestitutionTextbox.getHeight()) {
 			simulationSettings.coeffRestitutionTextBoxActive = true;
 			simulationSettings.coeffRestitutionInput = ""; // clear
@@ -135,8 +135,8 @@ public class Simulating extends State implements StateMethods {
             } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && simulationSettings.coeffRestitutionInput.length() > 0) {
             	simulationSettings.coeffRestitutionInput = simulationSettings.coeffRestitutionInput.substring(0, simulationSettings.coeffRestitutionInput.length() - 1); // handle backspace
             } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            	double newGravity = Double.parseDouble(simulationSettings.coeffRestitutionInput);
-            	SimulationConfig.setGravity(newGravity);
+            	double newCoeffRestitution = Double.parseDouble(simulationSettings.coeffRestitutionInput);
+            	SimulationConfig.setCoeffRestitution(newCoeffRestitution);
                 simulationSettings.coeffRestitutionTextBoxActive = false;
             }
         }

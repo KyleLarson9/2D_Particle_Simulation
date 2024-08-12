@@ -41,7 +41,7 @@ public class Projectile extends SimulationObject {
 	
 	public void update(LinkedList<SimulationObject> object) {
 				
-		toggleGravity();
+		toggleSettings();
 		
 		if(Simulating.clicked && !launched) {					
 			launched = true;
@@ -78,14 +78,12 @@ public class Projectile extends SimulationObject {
 	
 	// private methods
 	
-	private void toggleGravity() {
+	private void toggleSettings() {
 		if(SimulationConfig.isGravityEnabled()) 
 			gravity = SimulationConfig.getGravity();
 		else if(SimulationConfig.isGravityEnabled() == false)
 			gravity = 0;
-	}
-	
-	private void toggleCoeffRestitution() {
+		
 		if(SimulationConfig.isCoeffRestitutionEnabled())
 			coeffRestitution = SimulationConfig.getCoeffRestitution();
 		else if(SimulationConfig.isCoeffRestitutionEnabled() == false)
@@ -96,8 +94,6 @@ public class Projectile extends SimulationObject {
 		
 		// needs improvement
 		double velocityThreshold = 0.03; 
-		
-		toggleCoeffRestitution();
 		
 		for(int i = 0; i < handler.object.size(); i++) {
 			SimulationObject tempObject = handler.object.get(i);			

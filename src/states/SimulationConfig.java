@@ -7,8 +7,8 @@ public class SimulationConfig {
 	private static double gravity = 9.81; 
 	private static boolean gravityEnabled = true;
 	
-	private static double coeffRestitution = .9;
-	private static boolean coeffRestitutionEnabled = false;
+	private static double coeffRestitution = 1;
+	private static boolean coeffRestitutionEnabled = true;
 	
 	private static double initialVelocity = 100;
 	
