@@ -15,12 +15,13 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	public Rectangle gravityCheckbox;
 	public Rectangle gravityTextBox;
-	
-	// initial settings
-	public boolean coeffRestitutionEnabled = false;
+	public Rectangle coeffRestitutionCheckbox;
+	public Rectangle coeffRestitutionTextbox;
 	
 	public boolean gravityTextBoxActive = false;
+	public boolean coeffRestitutionTextBoxActive = false;
 	public String gravityInput = Double.toString(SimulationConfig.getGravity());
+	public String coeffRestitutionInput = Double.toString(SimulationConfig.getCoeffRestitution());
 	
 	public SimulationSettings(Simulation simulation) {
 		super(simulation);
@@ -65,6 +66,23 @@ public class SimulationSettings extends State implements StateMethods {
         g2d.setFont(font);
 		g2d.drawString("Gravity: " + gravityInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (14.5 * Simulation.SCALE)));
 
+		// Coefficient of Restitution
+		
+		if(SimulationConfig.isCoeffRestitutionEnabled()) g2d.setColor(Color.green);
+		else g2d.setColor(Color.red);
+		
+		coeffRestitutionCheckbox = new Rectangle((int) (backgroundX + (10 * Simulation.SCALE)) , (int) (backgroundY + (20 * Simulation.SCALE)), (int) (5 * Simulation.SCALE), (int) (5 * Simulation.SCALE));
+		g2d.fill(coeffRestitutionCheckbox);
+		
+		coeffRestitutionTextbox = new Rectangle((int) (backgroundX + (77 * Simulation.SCALE)), (int) (backgroundY + (20 * Simulation.SCALE)), (int) (13.5 * Simulation.SCALE), (int) (6 * Simulation.SCALE));
+		g2d.setColor(Color.black);
+		g2d.drawRect((int) (backgroundX + (76.5 * Simulation.SCALE)), (int) (backgroundY + (19.5 * Simulation.SCALE)), (int) (14 * Simulation.SCALE), (int) (6.5 * Simulation.SCALE));
+		g2d.setColor(Color.white);
+		g2d.fill(coeffRestitutionTextbox);
+		
+		g2d.setColor(Color.black);
+        g2d.setFont(font);
+		g2d.drawString("Coeff Restitution: " + coeffRestitutionInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (25 * Simulation.SCALE)));
 	}
 	
 	private void loadBackground() {

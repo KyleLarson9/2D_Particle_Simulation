@@ -42,7 +42,8 @@ public class Simulating extends State implements StateMethods {
 	public void update() {
 		handler.update();
 		
-		if(clicked) {
+		// create new projectile object
+		if(clicked) { 
 						
 			double startX = 10;
 		    double startY = Simulation.APP_HEIGHT / 2.0;
@@ -96,6 +97,21 @@ public class Simulating extends State implements StateMethods {
 		} else {
 			simulationSettings.gravityTextBoxActive = false;
 		}
+		
+		if(x > simulationSettings.coeffRestitutionCheckbox.getX() && x < simulationSettings.coeffRestitutionCheckbox.getX() + simulationSettings.coeffRestitutionCheckbox.getWidth()
+		   && y > simulationSettings.coeffRestitutionCheckbox.getY() && y < simulationSettings.coeffRestitutionCheckbox.getY() + simulationSettings.coeffRestitutionCheckbox.getHeight()) {
+			// check or uncheck
+			SimulationConfig.setCoeffRestitution(!SimulationConfig.isCoeffRestitutionEnabled());
+		}
+		
+		if(x > simulationSettings.coeffRestitutionTextbox.getX() && x < simulationSettings.coeffRestitutionTextbox.getX() + simulationSettings.coeffRestitutionTextbox.getWidth() 
+		   && y > simulationSettings.coeffRestitutionTextbox.getY() && y < simulationSettings.coeffRestitutionTextbox.getY() + simulationSettings.coeffRestitutionTextbox.getHeight()) {
+			simulationSettings.coeffRestitutionTextBoxActive = true;
+			simulationSettings.coeffRestitutionInput = ""; // clear
+		} else {
+			simulationSettings.coeffRestitutionTextBoxActive = false;
+		}
+		
 	}
 
 	@Override
@@ -110,6 +126,18 @@ public class Simulating extends State implements StateMethods {
             	double newGravity = Double.parseDouble(simulationSettings.gravityInput);
             	SimulationConfig.setGravity(newGravity);
                 simulationSettings.gravityTextBoxActive = false;
+            }
+        }
+		
+		if (simulationSettings.coeffRestitutionTextBoxActive) {
+            if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '.') {
+            	simulationSettings.coeffRestitutionInput += e.getKeyChar(); // append character to input
+            } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && simulationSettings.coeffRestitutionInput.length() > 0) {
+            	simulationSettings.coeffRestitutionInput = simulationSettings.coeffRestitutionInput.substring(0, simulationSettings.coeffRestitutionInput.length() - 1); // handle backspace
+            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            	double newGravity = Double.parseDouble(simulationSettings.coeffRestitutionInput);
+            	SimulationConfig.setGravity(newGravity);
+                simulationSettings.coeffRestitutionTextBoxActive = false;
             }
         }
 		

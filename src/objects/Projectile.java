@@ -13,7 +13,6 @@ import framework.SimulationObject;
 import main.Simulation;
 import states.Simulating;
 import states.SimulationConfig;
-import states.SimulationSettings;
 import vectors.Vector2D;
 
 
@@ -28,6 +27,7 @@ public class Projectile extends SimulationObject {
 	private double xVel, yVel;
 	
 	private double gravity;
+	private double coeffRestitution;
 	
 	private float dt = .00833f; // 1 / FPS
 		
@@ -85,10 +85,20 @@ public class Projectile extends SimulationObject {
 			gravity = 0;
 	}
 	
+	private void toggleCoeffRestitution() {
+		if(SimulationConfig.isCoeffRestitutionEnabled())
+			coeffRestitution = SimulationConfig.getCoeffRestitution();
+		else if(SimulationConfig.isCoeffRestitutionEnabled() == false)
+			coeffRestitution = 0;
+	}
+	
 	private void collision(LinkedList<SimulationObject> object) {
 		
 		// needs improvement
 		double velocityThreshold = 0.03; 
+		
+		toggleCoeffRestitution();
+		
 		for(int i = 0; i < handler.object.size(); i++) {
 			SimulationObject tempObject = handler.object.get(i);			
 			                                                       
@@ -98,12 +108,12 @@ public class Projectile extends SimulationObject {
 				
 				if(getTopBounds().intersects(blockBounds)) {
 					y = tempObject.getY() + blockBounds.getHeight();
-					yVel *= - 1;
+					yVel *= - 1 * coeffRestitution;
 				}
 				
 				if(getBottomBounds().intersects(blockBounds)) {
 					y = tempObject.getY() - r;
-					yVel *= -1;
+					yVel *= -1 * coeffRestitution;
 					if(Math.abs(yVel) < velocityThreshold) {
 					    moving = false;
 					}
@@ -112,12 +122,12 @@ public class Projectile extends SimulationObject {
 				
 				if(getRightBounds().intersects(blockBounds)) {                                                              
 					x = tempObject.getX() - r;
-					xVel *= - 1;
+					xVel *= - 1 * coeffRestitution;
 				} 
 				
 				if(getLeftBounds().intersects(blockBounds)) {
 					x = tempObject.getX() + blockBounds.getWidth();
-					xVel *= - 1;  
+					xVel *= - 1 * coeffRestitution;  
 				}
 				
 

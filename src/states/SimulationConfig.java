@@ -7,7 +7,8 @@ public class SimulationConfig {
 	private static double gravity = 9.81; 
 	private static boolean gravityEnabled = true;
 	
-	private static double coeffRestitution = .05;
+	private static double coeffRestitution = .9;
+	private static boolean coeffRestitutionEnabled = false;
 	
 	private static double initialVelocity = 100;
 	
@@ -37,5 +38,12 @@ public class SimulationConfig {
 		coeffRestitution = newCoeffRestitution;
 	}
 	
+	public static boolean isCoeffRestitutionEnabled() {
+		return coeffRestitutionEnabled;
+	}
+	
+	public static void setCoeffRestitution(boolean enabled) {
+		coeffRestitutionEnabled = enabled;
+	}
 }
 
