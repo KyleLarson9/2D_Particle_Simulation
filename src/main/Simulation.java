@@ -65,7 +65,7 @@ public class Simulation implements Runnable {
 	// private methods
 
 	private void startAppLoop() {
-		thread = new Thread(this);
+		thread = new Thread(this); 
 		thread.start();
 	} 
 	 

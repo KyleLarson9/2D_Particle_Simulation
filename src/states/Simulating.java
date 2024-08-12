@@ -70,7 +70,7 @@ public class Simulating extends State implements StateMethods {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		 
 		clicked = true;
 
 		x = e.getX();
@@ -90,7 +90,7 @@ public class Simulating extends State implements StateMethods {
 		}
 		
 		// check if mouse is in the gravity check box		
-		else if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
+		if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
 		   && y > simulationSettings.gravityTextBox.getY() && y < simulationSettings.gravityTextBox.getY() + simulationSettings.gravityTextBox.getHeight()) {
 			simulationSettings.gravityTextBoxActive = true;
 			simulationSettings.gravityInput = ""; // clear
@@ -98,13 +98,7 @@ public class Simulating extends State implements StateMethods {
 			simulationSettings.gravityTextBoxActive = false;
 		}
 		
-		if(x > simulationSettings.coeffRestitutionCheckbox.getX() && x < simulationSettings.coeffRestitutionCheckbox.getX() + simulationSettings.coeffRestitutionCheckbox.getWidth()
-		   && y > simulationSettings.coeffRestitutionCheckbox.getY() && y < simulationSettings.coeffRestitutionCheckbox.getY() + simulationSettings.coeffRestitutionCheckbox.getHeight()) {
-			// check or uncheck
-			SimulationConfig.setCoeffRestitution(!SimulationConfig.isCoeffRestitutionEnabled());
-		}
-		
-		else if(x > simulationSettings.coeffRestitutionTextbox.getX() && x < simulationSettings.coeffRestitutionTextbox.getX() + simulationSettings.coeffRestitutionTextbox.getWidth() 
+		if(x > simulationSettings.coeffRestitutionTextbox.getX() && x < simulationSettings.coeffRestitutionTextbox.getX() + simulationSettings.coeffRestitutionTextbox.getWidth() 
 		   && y > simulationSettings.coeffRestitutionTextbox.getY() && y < simulationSettings.coeffRestitutionTextbox.getY() + simulationSettings.coeffRestitutionTextbox.getHeight()) {
 			simulationSettings.coeffRestitutionTextBoxActive = true;
 			simulationSettings.coeffRestitutionInput = ""; // clear
@@ -112,6 +106,10 @@ public class Simulating extends State implements StateMethods {
 			simulationSettings.coeffRestitutionTextBoxActive = false;
 		}
 		
+		if(x > simulationSettings.perfectyInelasticCollisionCheckbox.getX() && x < simulationSettings.perfectyInelasticCollisionCheckbox.getX() + simulationSettings.perfectyInelasticCollisionCheckbox.getWidth() 
+		   && y > simulationSettings.perfectyInelasticCollisionCheckbox.getY() && y < simulationSettings.perfectyInelasticCollisionCheckbox.getY() + simulationSettings.perfectyInelasticCollisionCheckbox.getHeight()) {
+			SimulationConfig.setIsPerfectlyInelastic(!SimulationConfig.getIsPerfectlyInelastic());
+		}
 	}
 
 	@Override
@@ -129,6 +127,7 @@ public class Simulating extends State implements StateMethods {
             }
         }
 		
+		// make it 0 <= value <= 1
 		if (simulationSettings.coeffRestitutionTextBoxActive) {
             if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '.') {
             	simulationSettings.coeffRestitutionInput += e.getKeyChar(); // append character to input

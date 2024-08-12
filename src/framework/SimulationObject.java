@@ -17,7 +17,7 @@ public abstract class SimulationObject {
 	protected Handler handler;
 	
 	protected ObjectId id;
-	
+	 
 	// default
 	public SimulationObject() {
 		

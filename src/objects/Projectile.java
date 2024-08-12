@@ -17,14 +17,12 @@ import vectors.Vector2D;
 
 
 public class Projectile extends SimulationObject {
-	
-	private Handler handler;
-		
+			
 	private boolean launched = false;
 	private boolean moving = false;
 	private double r;
 	private double vel = 100; // pixels/s
-	private double xVel, yVel;
+	private double xVel, yVel; 
 	
 	private double gravity;
 	private double coeffRestitution;
@@ -39,7 +37,7 @@ public class Projectile extends SimulationObject {
 	
 	// public methods
 	
-	public void update(LinkedList<SimulationObject> object) {
+	public void update(LinkedList<SimulationObject> objects) {
 				
 		toggleSettings();
 		
@@ -64,7 +62,7 @@ public class Projectile extends SimulationObject {
 		
 		Vector2D.updateVectorPositionToParticle(vector, middleX, middleY, xVel, yVel, launched, moving);
 
-		collision(object);
+		collision(objects);
 		
 	}
 	
@@ -79,24 +77,27 @@ public class Projectile extends SimulationObject {
 	// private methods
 	
 	private void toggleSettings() {
+				
 		if(SimulationConfig.isGravityEnabled()) 
 			gravity = SimulationConfig.getGravity();
 		else if(SimulationConfig.isGravityEnabled() == false)
 			gravity = 0;
 		
-		if(SimulationConfig.isCoeffRestitutionEnabled())
-			coeffRestitution = SimulationConfig.getCoeffRestitution();
-		else if(SimulationConfig.isCoeffRestitutionEnabled() == false)
+		if(SimulationConfig.getIsPerfectlyInelastic()) {
 			coeffRestitution = 0;
+		} else {
+			coeffRestitution = SimulationConfig.getCoeffRestitution();		
+		}
+			
 	}
 	
-	private void collision(LinkedList<SimulationObject> object) {
+	private void collision(LinkedList<SimulationObject> objects) {
 		
 		// needs improvement
 		double velocityThreshold = 0.03; 
 		
-		for(int i = 0; i < handler.object.size(); i++) {
-			SimulationObject tempObject = handler.object.get(i);			
+		for(int i = 0; i < objects.size(); i++) {
+			SimulationObject tempObject = objects.get(i);			
 			                                                       
 			if(tempObject.getId() == ObjectId.Block) {
 				
@@ -105,11 +106,14 @@ public class Projectile extends SimulationObject {
 				if(getTopBounds().intersects(blockBounds)) {
 					y = tempObject.getY() + blockBounds.getHeight();
 					yVel *= - 1 * coeffRestitution;
+					xVel *= coeffRestitution;
 				}
 				
 				if(getBottomBounds().intersects(blockBounds)) {
 					y = tempObject.getY() - r;
 					yVel *= -1 * coeffRestitution;
+					xVel *= coeffRestitution;
+
 					if(Math.abs(yVel) < velocityThreshold) {
 					    moving = false;
 					}
@@ -119,11 +123,14 @@ public class Projectile extends SimulationObject {
 				if(getRightBounds().intersects(blockBounds)) {                                                              
 					x = tempObject.getX() - r;
 					xVel *= - 1 * coeffRestitution;
+					yVel *= coeffRestitution;
 				} 
 				
 				if(getLeftBounds().intersects(blockBounds)) {
 					x = tempObject.getX() + blockBounds.getWidth();
-					xVel *= - 1 * coeffRestitution;  
+					xVel *= - 1 * coeffRestitution; 
+					yVel *= coeffRestitution;
+
 				}
 				
 

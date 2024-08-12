@@ -15,13 +15,19 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	public Rectangle gravityCheckbox;
 	public Rectangle gravityTextBox;
-	public Rectangle coeffRestitutionCheckbox;
+	
 	public Rectangle coeffRestitutionTextbox;
+	public Rectangle perfectyInelasticCollisionCheckbox;
+	
+	public Rectangle initialVelocityTextbox;
 	
 	public boolean gravityTextBoxActive = false;
 	public boolean coeffRestitutionTextBoxActive = false;
+	public boolean isPerfectlyInelastic = false;
+	
 	public String gravityInput = Double.toString(SimulationConfig.getGravity());
 	public String coeffRestitutionInput = Double.toString(SimulationConfig.getCoeffRestitution());
+	public String initialVelocityInput = Double.toString(SimulationConfig.getInitialVelocity());
 	
 	public SimulationSettings(Simulation simulation) {
 		super(simulation);
@@ -47,7 +53,14 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	private void renderComponents(Graphics2D g2d) { // need to do this better
 		
-		// Gravity
+		if(SimulationConfig.isGravityEnabled() && gravityInput.equals(0))
+			gravityInput = Double.toString(SimulationConfig.getGravity());
+		else if(!SimulationConfig.isGravityEnabled())
+			gravityInput = "0";
+
+		
+		
+		// ******************************Gravity******************************
 		if(SimulationConfig.isGravityEnabled()) g2d.setColor(Color.green);
 		else g2d.setColor(Color.red);
 			
@@ -66,13 +79,7 @@ public class SimulationSettings extends State implements StateMethods {
         g2d.setFont(font);
 		g2d.drawString("Gravity: " + gravityInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (14.5 * Simulation.SCALE)));
 
-		// Coefficient of Restitution
-		
-		if(SimulationConfig.isCoeffRestitutionEnabled()) g2d.setColor(Color.green);
-		else g2d.setColor(Color.red);
-		
-		coeffRestitutionCheckbox = new Rectangle((int) (backgroundX + (10 * Simulation.SCALE)) , (int) (backgroundY + (20 * Simulation.SCALE)), (int) (5 * Simulation.SCALE), (int) (5 * Simulation.SCALE));
-		g2d.fill(coeffRestitutionCheckbox);
+		// ******************************Coefficient of Restitution******************************		
 		
 		coeffRestitutionTextbox = new Rectangle((int) (backgroundX + (77 * Simulation.SCALE)), (int) (backgroundY + (20 * Simulation.SCALE)), (int) (13.5 * Simulation.SCALE), (int) (6 * Simulation.SCALE));
 		g2d.setColor(Color.black);
@@ -83,6 +90,22 @@ public class SimulationSettings extends State implements StateMethods {
 		g2d.setColor(Color.black);
         g2d.setFont(font);
 		g2d.drawString("Coeff Restitution: " + coeffRestitutionInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (25 * Simulation.SCALE)));
+		
+		if(SimulationConfig.getIsPerfectlyInelastic()) {
+			g2d.setColor(Color.green);
+			coeffRestitutionInput = "0";
+		}
+		else g2d.setColor(Color.red);
+		
+		perfectyInelasticCollisionCheckbox = new Rectangle((int) (backgroundX + 28 * Simulation.SCALE), (int) (backgroundY + 30 * Simulation.SCALE), (int) (3 * Simulation.SCALE), (int) (3 * Simulation.SCALE));
+		g2d.fill(perfectyInelasticCollisionCheckbox);
+		
+		g2d.setColor(Color.black);
+		g2d.setFont(new Font("Serif", Font.PLAIN, (int) (5 * Simulation.SCALE)));
+		g2d.drawString("Perfectly Inelastic", (int) (backgroundX + (33 * Simulation.SCALE)), (int) (backgroundY + 33 * Simulation.SCALE));
+	
+	
+		
 	}
 	
 	private void loadBackground() {

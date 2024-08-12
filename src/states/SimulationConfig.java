@@ -8,8 +8,7 @@ public class SimulationConfig {
 	private static boolean gravityEnabled = true;
 	
 	private static double coeffRestitution = 1;
-	private static boolean coeffRestitutionEnabled = true;
-	
+	private static boolean isPerfectlyInelastic = false;
 	private static double initialVelocity = 100;
 	
 	// gravity methods
@@ -17,7 +16,7 @@ public class SimulationConfig {
 		return gravity;
 	}
 	
-	public static void setGravity(double newGravity) {
+	public static void setGravity(double newGravity) { 
 		gravity = newGravity;
 	}
 
@@ -38,12 +37,20 @@ public class SimulationConfig {
 		coeffRestitution = newCoeffRestitution;
 	}
 	
-	public static boolean isCoeffRestitutionEnabled() {
-		return coeffRestitutionEnabled;
+	public static boolean getIsPerfectlyInelastic() {
+		return isPerfectlyInelastic;
 	}
 	
-	public static void setCoeffRestitution(boolean enabled) {
-		coeffRestitutionEnabled = enabled;
+	public static void setIsPerfectlyInelastic(boolean inelastic) {
+		isPerfectlyInelastic = inelastic;
+	}
+	
+	public static void setInitialVelocity(double velocity) {
+		initialVelocity = velocity;
+	}
+	
+	public static double getInitialVelocity() {
+		return initialVelocity;
 	}
 }
 
