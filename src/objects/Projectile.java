@@ -88,6 +88,8 @@ public class Projectile extends SimulationObject {
 		} else {
 			coeffRestitution = SimulationConfig.getCoeffRestitution();		
 		}
+		
+		vel = SimulationConfig.getInitialVelocity();
 			
 	}
 	
@@ -107,6 +109,10 @@ public class Projectile extends SimulationObject {
 					y = tempObject.getY() + blockBounds.getHeight();
 					yVel *= - 1 * coeffRestitution;
 					xVel *= coeffRestitution;
+					
+					if(Math.abs(yVel) < velocityThreshold) {
+					    moving = false;
+					}
 				}
 				
 				if(getBottomBounds().intersects(blockBounds)) {
@@ -124,6 +130,10 @@ public class Projectile extends SimulationObject {
 					x = tempObject.getX() - r;
 					xVel *= - 1 * coeffRestitution;
 					yVel *= coeffRestitution;
+					
+					if(Math.abs(yVel) < velocityThreshold) {
+					    moving = false;
+					}
 				} 
 				
 				if(getLeftBounds().intersects(blockBounds)) {
@@ -131,6 +141,9 @@ public class Projectile extends SimulationObject {
 					xVel *= - 1 * coeffRestitution; 
 					yVel *= coeffRestitution;
 
+					if(Math.abs(yVel) < velocityThreshold) {
+					    moving = false;
+					}
 				}
 				
 

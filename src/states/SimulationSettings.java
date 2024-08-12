@@ -7,23 +7,23 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+import framework.ScaleUtils;
 import main.Simulation;
 
 public class SimulationSettings extends State implements StateMethods {
 
 	private int backgroundX, backgroundY, backgroundWidth, backgroundHeight;
 	
+	// make a rectangle handler for these?
 	public Rectangle gravityCheckbox;
-	public Rectangle gravityTextBox;
-	
+	public Rectangle gravityTextBox;	
 	public Rectangle coeffRestitutionTextbox;
-	public Rectangle perfectyInelasticCollisionCheckbox;
-	
+	public Rectangle perfectyInelasticCollisionCheckbox;	
 	public Rectangle initialVelocityTextbox;
 	
 	public boolean gravityTextBoxActive = false;
 	public boolean coeffRestitutionTextBoxActive = false;
-	public boolean isPerfectlyInelastic = false;
+	public boolean initialVelocityTextboxActive = false;
 	
 	public String gravityInput = Double.toString(SimulationConfig.getGravity());
 	public String coeffRestitutionInput = Double.toString(SimulationConfig.getCoeffRestitution());
@@ -51,13 +51,14 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	// private methods
 	
-	private void renderComponents(Graphics2D g2d) { // need to do this better
+	private void renderComponents(Graphics2D g2d) { // need to do this better ---- how
 		
 		if(SimulationConfig.isGravityEnabled() && gravityInput.equals(0))
 			gravityInput = Double.toString(SimulationConfig.getGravity());
 		else if(!SimulationConfig.isGravityEnabled())
 			gravityInput = "0";
 
+		// !!!!!!!!!!!!!!!!!! Velocity need to be converted to meters not just in pixels and back to pixels
 		
 		
 		// ******************************Gravity******************************
@@ -104,9 +105,19 @@ public class SimulationSettings extends State implements StateMethods {
 		g2d.setFont(new Font("Serif", Font.PLAIN, (int) (5 * Simulation.SCALE)));
 		g2d.drawString("Perfectly Inelastic", (int) (backgroundX + (33 * Simulation.SCALE)), (int) (backgroundY + 33 * Simulation.SCALE));
 	
-	
+		// ******************************Initial Velocity******************************
 		
-	}
+		initialVelocityTextbox = new Rectangle((int) (backgroundX + (70 * Simulation.SCALE)), (int) (backgroundY + (36 * Simulation.SCALE)), (int) (13.5 * Simulation.SCALE), (int) (6 * Simulation.SCALE));
+		g2d.setColor(Color.black);
+		g2d.drawRect((int) (backgroundX + (69.5 * Simulation.SCALE)), (int) (backgroundY + (35.5 * Simulation.SCALE)), (int) (14 * Simulation.SCALE), (int) (6.5 * Simulation.SCALE));
+		g2d.setColor(Color.white);
+		g2d.fill(initialVelocityTextbox);
+		
+		g2d.setColor(Color.black);
+		g2d.setFont(font);
+		g2d.drawString("Initial Velocity: " + initialVelocityInput, (int) (backgroundX + (20 * Simulation.SCALE)), (int) (backgroundY + (41 * Simulation.SCALE)));
+		 
+	} 
 	
 	private void loadBackground() {
 		backgroundWidth = (int) (100 * Simulation.SCALE);

@@ -13,7 +13,7 @@ public class ScaleUtils {
 	public static double pixelsToMeters(double GRAVITY) {
 		return GRAVITY / SCALE_FACTOR;
 	}
-	
+	 
 	public static double getScaleFactor() {
 		return SCALE_FACTOR;
 	}

@@ -82,14 +82,19 @@ public class Simulating extends State implements StateMethods {
 			clicked = false;
 		
 		// ***********************FOR NOW***********************
-		// click check boxes
+		// Click checkboxes
 		if(x > simulationSettings.gravityCheckbox.getX() && x < simulationSettings.gravityCheckbox.getX() + simulationSettings.gravityCheckbox.getWidth()
 		   && y > simulationSettings.gravityCheckbox.getY() && y < simulationSettings.gravityCheckbox.getY() + simulationSettings.gravityCheckbox.getHeight()) {
 			// check or uncheck
 			SimulationConfig.setGravityEnabled(!SimulationConfig.isGravityEnabled());
 		}
 		
-		// check if mouse is in the gravity check box		
+		if(x > simulationSettings.perfectyInelasticCollisionCheckbox.getX() && x < simulationSettings.perfectyInelasticCollisionCheckbox.getX() + simulationSettings.perfectyInelasticCollisionCheckbox.getWidth() 
+		   && y > simulationSettings.perfectyInelasticCollisionCheckbox.getY() && y < simulationSettings.perfectyInelasticCollisionCheckbox.getY() + simulationSettings.perfectyInelasticCollisionCheckbox.getHeight()) {
+			SimulationConfig.setIsPerfectlyInelastic(!SimulationConfig.getIsPerfectlyInelastic());
+		}
+		
+		// Click textboxes
 		if(x > simulationSettings.gravityTextBox.getX() && x < simulationSettings.gravityTextBox.getX() + simulationSettings.gravityTextBox.getWidth() 
 		   && y > simulationSettings.gravityTextBox.getY() && y < simulationSettings.gravityTextBox.getY() + simulationSettings.gravityTextBox.getHeight()) {
 			simulationSettings.gravityTextBoxActive = true;
@@ -106,10 +111,14 @@ public class Simulating extends State implements StateMethods {
 			simulationSettings.coeffRestitutionTextBoxActive = false;
 		}
 		
-		if(x > simulationSettings.perfectyInelasticCollisionCheckbox.getX() && x < simulationSettings.perfectyInelasticCollisionCheckbox.getX() + simulationSettings.perfectyInelasticCollisionCheckbox.getWidth() 
-		   && y > simulationSettings.perfectyInelasticCollisionCheckbox.getY() && y < simulationSettings.perfectyInelasticCollisionCheckbox.getY() + simulationSettings.perfectyInelasticCollisionCheckbox.getHeight()) {
-			SimulationConfig.setIsPerfectlyInelastic(!SimulationConfig.getIsPerfectlyInelastic());
+		if(x > simulationSettings.initialVelocityTextbox.getX() && x < simulationSettings.initialVelocityTextbox.getX() + simulationSettings.initialVelocityTextbox.getWidth() 
+		   && y > simulationSettings.initialVelocityTextbox.getY() && y < simulationSettings.initialVelocityTextbox.getY() + simulationSettings.initialVelocityTextbox.getHeight()) {
+			simulationSettings.initialVelocityTextboxActive = true;
+			simulationSettings.initialVelocityInput = ""; // clear
+		} else {
+			simulationSettings.initialVelocityTextboxActive = false;
 		}
+		
 	}
 
 	@Override
@@ -137,6 +146,18 @@ public class Simulating extends State implements StateMethods {
             	double newCoeffRestitution = Double.parseDouble(simulationSettings.coeffRestitutionInput);
             	SimulationConfig.setCoeffRestitution(newCoeffRestitution);
                 simulationSettings.coeffRestitutionTextBoxActive = false;
+            }
+        }
+		
+		if (simulationSettings.initialVelocityTextboxActive) {
+            if (Character.isDigit(e.getKeyChar()) || e.getKeyChar() == '.') {
+            	simulationSettings.initialVelocityInput += e.getKeyChar(); // append character to input
+            } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && simulationSettings.initialVelocityInput.length() > 0) {
+            	simulationSettings.initialVelocityInput = simulationSettings.initialVelocityInput.substring(0, simulationSettings.initialVelocityInput.length() - 1); // handle backspace
+            } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            	double newInitialVelocity = Double.parseDouble(simulationSettings.initialVelocityInput);
+            	SimulationConfig.setInitialVelocity(newInitialVelocity);
+                simulationSettings.initialVelocityTextboxActive = false;
             }
         }
 		
