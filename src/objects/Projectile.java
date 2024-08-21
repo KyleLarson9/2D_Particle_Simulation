@@ -3,7 +3,10 @@ package objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import framework.Handler;
@@ -21,18 +24,21 @@ public class Projectile extends SimulationObject {
 	private boolean launched = false;
 	private boolean moving = false;
 	private double r;
-	private double vel = 100; // pixels/s
+	private double vel;
 	private double xVel, yVel; 
-	
+	 
 	private double gravity;
 	private double coeffRestitution;
 	
 	private float dt = .00833f; // 1 / FPS
-		
+	
+	private ArrayList<Point2D.Double> particleCenters;
+	
 	public Projectile(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		super(x, y, mass, r, vector, handler, id);
 		this.handler = handler;
 		this.r = r;
+		particleCenters = new ArrayList<>();
 	}
 	
 	// public methods
@@ -41,27 +47,30 @@ public class Projectile extends SimulationObject {
 				
 		toggleSettings();
 		
-		if(Simulating.clicked && !launched) {					
+		if(!Simulating.clicked && !launched) {					
 			launched = true;
 			moving = true;
 			double radians = vector.getMouseDirection(Simulating.getX(), Simulating.getY());
- 			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
-			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);			
-		} 
-		if(launched && moving) {
-			
-			yVel += gravity * dt;
-			
-			x+=ScaleUtils.metersToPixels(xVel) * dt * Simulation.SCALE;
-			y+=ScaleUtils.metersToPixels(yVel) * dt * Simulation.SCALE;
 
-		}
+ 			xVel = ScaleUtils.pixelsToMeters(vel) * Math.cos(radians);
+			yVel = ScaleUtils.pixelsToMeters(vel) * Math.sin(radians);	
+
+		} 
+		if (launched && moving) {
+	        
+	        yVel += gravity * dt;
+	        
+	        x += ScaleUtils.metersToPixels(xVel) * dt * Simulation.SCALE;
+	        y += ScaleUtils.metersToPixels(yVel) * dt * Simulation.SCALE;
+	        
+	    }
 		
 		double middleX = x + (r/2);
 		double middleY = y + (r/2);
 		
 		Vector2D.updateVectorPositionToParticle(vector, middleX, middleY, xVel, yVel, launched, moving);
 
+		particleCollisions(objects);
 		collision(objects);
 		
 	}
@@ -89,8 +98,12 @@ public class Projectile extends SimulationObject {
 			coeffRestitution = SimulationConfig.getCoeffRestitution();		
 		}
 		
-		vel = SimulationConfig.getInitialVelocity();
+		vel = ScaleUtils.metersToPixels(SimulationConfig.getInitialVelocity());
 			
+	}
+	
+	private void particleCollisions(LinkedList<SimulationObject> objects) {
+		
 	}
 	
 	private void collision(LinkedList<SimulationObject> objects) {
@@ -100,7 +113,7 @@ public class Projectile extends SimulationObject {
 		
 		for(int i = 0; i < objects.size(); i++) {
 			SimulationObject tempObject = objects.get(i);			
-			                                                       
+			                  cd                                      
 			if(tempObject.getId() == ObjectId.Block) {
 				
 				Rectangle2D blockBounds = tempObject.getBounds();

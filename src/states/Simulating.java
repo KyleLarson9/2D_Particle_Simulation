@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import framework.Handler;
 import framework.ObjectId;
+import framework.SimulationObject;
 import main.Simulation;
 import objects.Projectile;
 import vectors.Vector2D;
@@ -44,21 +45,21 @@ public class Simulating extends State implements StateMethods {
 		
 		// create new projectile object
 		if(clicked) { 
-						
-			double startX = 20;
+		
+			double startX = 100;
 		    double startY = Simulation.APP_HEIGHT / 2.0;
 		    double targetX = getX();
 		    double targetY = getY();
 		    
 		    vector = new Vector2D(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
-		    newProjectile = new Projectile(startX, startY, 12 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
+		    newProjectile = new Projectile(startX, startY, 36 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newProjectile);
-		    
+
 		    resetClick(); 
 		} 
-
 		
+
 	}
 
 	@Override
@@ -68,14 +69,17 @@ public class Simulating extends State implements StateMethods {
 		simulationSettings.render(g2d);
 	}
 
+	public void setClick() {
+		clicked = !clicked;
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		 
-		clicked = true;
-
 		x = e.getX();
 		y = e.getY();
-		
+		setClick();
+
 		// check if mouse is in bounds of the settings state - temporary
 		if(x > simulationSettings.getBackgroundX() && x < simulationSettings.getBackgroundX() + simulationSettings.getBackgroundWidth()
 		   && y > simulationSettings.getBackgroundY() && y < simulationSettings.getBackgroundY() + simulationSettings.getBackgroundHeight()) 

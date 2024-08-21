@@ -9,7 +9,7 @@ public class SimulationConfig {
 	
 	private static double coeffRestitution = 1;
 	private static boolean isPerfectlyInelastic = false;
-	private static double initialVelocity = 100;
+	private static double initialVelocity = 10; // m/s
 	
 	// gravity methods
 	public static double getGravity() {

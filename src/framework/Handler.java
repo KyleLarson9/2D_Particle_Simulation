@@ -17,6 +17,8 @@ public class Handler {
 	public void update() {	
 		for(int i = 0; i < object.size(); i++) {
 			tempObject = object.get(i);
+	        
+
 			tempObject.update(object);
 		}		
 		
@@ -25,12 +27,15 @@ public class Handler {
 	public void render(Graphics2D g2d) {
 		for(int i = 0; i < object.size(); i++) {
 			tempObject = object.get(i);
+			
 			tempObject.render(g2d);
 		}
 	}
 	
 	public void addObject(SimulationObject object) {
 		this.object.add(object);
+		if(object.getId() == ObjectId.Projectile)
+			System.out.println("Added");
 	}
 	
 	public void removeObject(SimulationObject object) {

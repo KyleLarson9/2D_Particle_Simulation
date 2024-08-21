@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
-import framework.ScaleUtils;
 import main.Simulation;
 
 public class SimulationSettings extends State implements StateMethods {
@@ -25,9 +24,9 @@ public class SimulationSettings extends State implements StateMethods {
 	public boolean coeffRestitutionTextBoxActive = false;
 	public boolean initialVelocityTextboxActive = false;
 	
-	public String gravityInput = Double.toString(SimulationConfig.getGravity());
+	public String gravityInput = Double.toString(SimulationConfig.getGravity()); // enter in m/s/s
 	public String coeffRestitutionInput = Double.toString(SimulationConfig.getCoeffRestitution());
-	public String initialVelocityInput = Double.toString(SimulationConfig.getInitialVelocity());
+	public String initialVelocityInput = Double.toString(SimulationConfig.getInitialVelocity()); // enter in m/s
 	
 	public SimulationSettings(Simulation simulation) {
 		super(simulation);
@@ -42,7 +41,7 @@ public class SimulationSettings extends State implements StateMethods {
 	}
 	
 	public void render(Graphics2D g2d) {
-		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.setColor(Color.gray);
 		g2d.fillRect(backgroundX, backgroundY, backgroundWidth, backgroundHeight);
 		
 		renderComponents(g2d);
@@ -56,10 +55,7 @@ public class SimulationSettings extends State implements StateMethods {
 		if(SimulationConfig.isGravityEnabled() && gravityInput.equals(0))
 			gravityInput = Double.toString(SimulationConfig.getGravity());
 		else if(!SimulationConfig.isGravityEnabled())
-			gravityInput = "0";
-
-		// !!!!!!!!!!!!!!!!!! Velocity need to be converted to meters not just in pixels and back to pixels
-		
+			gravityInput = "0";		
 		
 		// ******************************Gravity******************************
 		if(SimulationConfig.isGravityEnabled()) g2d.setColor(Color.green);
@@ -121,7 +117,7 @@ public class SimulationSettings extends State implements StateMethods {
 	
 	private void loadBackground() {
 		backgroundWidth = (int) (100 * Simulation.SCALE);
-		backgroundHeight = (int) (200 * Simulation.SCALE);
+		backgroundHeight = (int) (50 * Simulation.SCALE);
 		backgroundX = Simulation.APP_WIDTH - backgroundWidth - (int) (10 * Simulation.SCALE);
 		backgroundY = (int) (10 * Simulation.SCALE);
 	}
