@@ -11,6 +11,7 @@ import vectors.Vector2D;
 public abstract class SimulationObject {
 
 	protected double x, y;
+	protected double xVel, yVel;
 	protected double mass;
 	protected double r;
 	protected Vector2D vector;
@@ -44,6 +45,22 @@ public abstract class SimulationObject {
 	public abstract void update(LinkedList<SimulationObject> object);
 	public abstract void render(Graphics2D g2d);
 	public abstract Rectangle2D getBounds();
+	
+	public double getxVel() {
+		return xVel;
+	}
+	
+	public void setxVel(double xVel) {
+		this.xVel = xVel;
+	}
+	
+	public double getyVel() {
+		return yVel;
+	}
+	
+	public void setyVel(double yVel) {
+		this.yVel = yVel;
+	}
 	
 	public double getR() {
 		return r;

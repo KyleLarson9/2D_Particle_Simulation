@@ -8,7 +8,7 @@ import framework.Handler;
 import framework.ObjectId;
 import framework.SimulationObject;
 import main.Simulation;
-import objects.Projectile;
+import objects.Particle;
 import vectors.Vector2D;
 import vectors.VectorHandler;
 
@@ -16,7 +16,7 @@ public class Simulating extends State implements StateMethods {
 
 	private Handler handler;
 	private VectorHandler vectorHandler;
-	private Projectile newProjectile;
+	private Particle newParticle;
 	private Vector2D vector;
 	
 	// states
@@ -53,8 +53,8 @@ public class Simulating extends State implements StateMethods {
 		    
 		    vector = new Vector2D(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
-		    newProjectile = new Projectile(startX, startY, 36 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
-		    handler.addObject(newProjectile);
+		    newParticle = new Particle(startX, startY, 12 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
+		    handler.addObject(newParticle);
 
 		    resetClick(); 
 		} 
