@@ -3,26 +3,18 @@ package objects;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 import java.util.LinkedList;
-
 import framework.Handler;
 import framework.ObjectId;
-import framework.ScaleUtils;
 import framework.SimulationObject;
-import main.Simulation;
 import states.Simulating;
-import states.SimulationConfig;
 import vectors.Vector2D;
 
 
 public class Particle extends SimulationObject {
 			
-	public static boolean launched = false, moving = false;
-
+	public boolean launched = false, moving = false;
 		
 	public Particle(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
 		super(x, y, mass, r, vector, handler, id);
@@ -42,11 +34,9 @@ public class Particle extends SimulationObject {
 			double radians = vector.getMouseDirection(Simulating.getX(), Simulating.getY());
 
 			PhysicsLogic.setParticleVelocityComponents(this, radians);
-	        System.out.println("Initial xVel: " + getxVel() + ", yVel: " + getyVel()); // flags are messed up
-	        System.out.println("Particle launched: " + launched + ", moving: " + moving);
-
 
 		} 
+		
 		if(launched && moving) {
 		
 	       PhysicsLogic.applyGravity(this);
@@ -61,6 +51,7 @@ public class Particle extends SimulationObject {
 		Vector2D.updateVectorPositionToParticle(vector, middleX, middleY, xVel, yVel, launched, moving);
 
 		PhysicsLogic.particleBlockCollision(objects, this);
+
 	}
 	
 	public void render(Graphics2D g2d) {

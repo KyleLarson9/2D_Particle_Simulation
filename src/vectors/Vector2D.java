@@ -92,7 +92,7 @@ public class Vector2D {
 			return directionVector;
 		} else if(launched && moving) { // velocity vector
 			Vector2D velocityVector = new Vector2D(middleX, middleY, middleX + (xVel), middleY + (yVel));
-			velocityVector = velocityVector.normalize().multiplyByScalar(20);
+			//velocityVector = velocityVector.normalize().multiplyByScalar(20);
             setVector(vector, velocityVector);
             
             return velocityVector;

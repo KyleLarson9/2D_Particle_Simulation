@@ -22,7 +22,7 @@ public class Simulating extends State implements StateMethods {
 	// states
 	private SimulationSettings simulationSettings;
 	
-	public static int x, y;
+	public static int x, y;     
 	public static boolean clicked = false;
 	    
 	public Simulating(Simulation simulation) {
@@ -68,17 +68,12 @@ public class Simulating extends State implements StateMethods {
 		handler.render(g2d);
 		simulationSettings.render(g2d);
 	}
-
-	public void setClick() {
-		clicked = !clicked;
-	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		 
+		clicked = true;		 
 		x = e.getX();
 		y = e.getY();
-		setClick();
 
 		// check if mouse is in bounds of the settings state - temporary
 		if(x > simulationSettings.getBackgroundX() && x < simulationSettings.getBackgroundX() + simulationSettings.getBackgroundWidth()

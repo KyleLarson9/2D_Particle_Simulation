@@ -13,7 +13,6 @@ import vectors.Vector2D;
 public class PhysicsLogic {
 
 	// **** USE GETTERS AND SETTERS INSTEAD
-	private static Vector2D particleVelocityVector;
 	private static double gravity;
 	private static double coeffRestitution;
 	private static double particleVel;
@@ -30,6 +29,7 @@ public class PhysicsLogic {
 		double yVel = ScaleUtils.pixelsToMeters(particleVel) * Math.sin(radians);
 		particle.setxVel(xVel);
 		particle.setyVel(yVel);
+	
 	}
 	
 	public static void moveParticle(Particle particle) {
@@ -39,6 +39,7 @@ public class PhysicsLogic {
 		
 		particle.setX(newX);
 		particle.setY(newY);
+		
 	}
 	
 	public static void togglePhysicsSettings(Particle particle) {
@@ -52,7 +53,7 @@ public class PhysicsLogic {
 		else 
 			coeffRestitution = SimulationConfig.getCoeffRestitution();
 		
-		// set up velocity vector
+		// get velocity from settings menu input
 		particleVel = ScaleUtils.metersToPixels(SimulationConfig.getInitialVelocity());
 
 	}
