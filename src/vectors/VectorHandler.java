@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 public class VectorHandler {
 
-	public LinkedList<Vector2D> vectors = new LinkedList<>();
+	public LinkedList<Vector> vectors = new LinkedList<>();
 	
 	
 	public VectorHandler() {
@@ -15,17 +15,17 @@ public class VectorHandler {
 	}
 	
 	public void render(Graphics2D g2d) {
-		for(Vector2D vector : vectors) {
+		for(Vector vector : vectors) {
 			g2d.setColor(Color.white);
-			g2d.draw(new Line2D.Double(vector.x1, vector.y1, vector.x2, vector.y2));		
+			g2d.draw(new Line2D.Double(vector.x1, vector.y1, vector.x2, vector.y2)); // for now	
 		}
 	}
 
-	public void addVector(Vector2D vector) {	
+	public void addVector(Vector vector) {	
 		this.vectors.add(vector);
 	}
 	
-	public void removeVector(Vector2D vector) {
+	public void removeVector(Vector vector) {
 		this.vectors.remove(vector);
 	}
 	

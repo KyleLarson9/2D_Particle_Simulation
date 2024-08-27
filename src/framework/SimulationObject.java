@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 
-import vectors.Vector2D;
+import vectors.Vector;
 
 // Holds methods needed for object
 
@@ -14,7 +14,7 @@ public abstract class SimulationObject {
 	protected double xVel, yVel;
 	protected double mass;
 	protected double r;
-	protected Vector2D vector;
+	protected Vector vector;
 	protected Handler handler;
 	
 	protected ObjectId id;
@@ -32,7 +32,7 @@ public abstract class SimulationObject {
 	}
 	
 	// projectile
-	public SimulationObject(double x, double y, double r, double mass, Vector2D vector, Handler handler, ObjectId id) {
+	public SimulationObject(double x, double y, double r, double mass, Vector vector, Handler handler, ObjectId id) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
@@ -61,13 +61,13 @@ public abstract class SimulationObject {
 	public void setyVel(double yVel) {
 		this.yVel = yVel;
 	}
-	
-	public double getR() {
-		return r;
-	}
 
 	public void setR(double r) {
 		this.r = r;
+	}
+	
+	public double getR() {
+		return r;
 	}
 	
 	public double getMass() {
@@ -78,11 +78,11 @@ public abstract class SimulationObject {
 		this.mass = mass;
 	}
 	
-	public Vector2D getVector() {
+	public Vector getVector() {
 		return vector;
 	}
 	
-	public void setVector(Vector2D vector) {
+	public void setVector(Vector vector) {
 		this.vector = vector;
 	}
 	

@@ -6,10 +6,9 @@ import java.awt.event.MouseEvent;
 
 import framework.Handler;
 import framework.ObjectId;
-import framework.SimulationObject;
 import main.Simulation;
 import objects.Particle;
-import vectors.Vector2D;
+import vectors.Vector;
 import vectors.VectorHandler;
 
 public class Simulating extends State implements StateMethods {
@@ -17,7 +16,7 @@ public class Simulating extends State implements StateMethods {
 	private Handler handler;
 	private VectorHandler vectorHandler;
 	private Particle newParticle;
-	private Vector2D vector;
+	private Vector vector;
 	
 	// states
 	private SimulationSettings simulationSettings;
@@ -50,10 +49,12 @@ public class Simulating extends State implements StateMethods {
 		    double startY = Simulation.APP_HEIGHT / 2.0;
 		    double targetX = getX();
 		    double targetY = getY();
+		    double radius = 15 * Simulation.SCALE;
+		    double mass = 15;
 		    
-		    vector = new Vector2D(startX, startY, targetX, targetY);
+		    vector = new Vector(startX, startY, targetX, targetY);
 		    vectorHandler.addVector(vector);
-		    newParticle = new Particle(startX, startY, 12 * Simulation.SCALE, 10, vector, handler, ObjectId.Projectile);
+		    newParticle = new Particle(startX, startY, radius, mass, vector, handler, ObjectId.Projectile);
 		    handler.addObject(newParticle);
 
 		    resetClick(); 
