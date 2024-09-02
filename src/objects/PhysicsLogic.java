@@ -10,6 +10,7 @@ import main.Simulation;
 import states.SimulationConfig;
 import vectors.Vector;
 
+<<<<<<< HEAD
 // Need a more efficient way to sort through particles
 
 public class PhysicsLogic {
@@ -17,6 +18,15 @@ public class PhysicsLogic {
 	private static double gravity;
 	private static double coeffRestitution;
 	private static double particleVel;
+=======
+public class PhysicsLogic {
+
+	// **** USE GETTERS AND SETTERS INSTEAD
+	private static double gravity;
+	private static double coeffRestitution;
+	private static double particleVel;
+    private static double velocityThreshold = 0.03;
+>>>>>>> e74f9eb20bb06152ee33453bef0ed0422f088d93
 	private static float dt = .00833f; // 1 / FPS
 
 	public static void applyGravity(Particle particle) {
@@ -78,16 +88,53 @@ public class PhysicsLogic {
 
 	                    if(distance <= (particle1.getR() + particle2.getR())) {
 	                    	
+<<<<<<< HEAD
 	                    	// needed values
 	                    	Vector particle1Position = new Vector(0, 0, particle1.getX() + particle1.getR(), particle1.getY() + particle1.getR());
 	                    	Vector particle1Velocity = new Vector(0, 0, particle1.getxVel(), particle1.getyVel());
+=======
+	                    	Vector particle1Position = new Vector(0, 0, particle1.getX() + particle1.getR(), particle1.getY() + particle1.getR());
+	                    	Vector particle1Velocity = new Vector(0, 0, particle1.getxVel(), particle1.getyVel());
+	                    	Vector particle1FinalVelocity;
+>>>>>>> e74f9eb20bb06152ee33453bef0ed0422f088d93
 	                    	double particle1Mass = particle1.getMass();
 	                    	
 	                    	Vector particle2Position = new Vector(0, 0, particle2.getX() + particle2.getR(), particle2.getY() + particle2.getR());
 	                    	Vector particle2Velocity = new Vector(0, 0, particle2.getxVel(), particle2.getyVel());
+<<<<<<< HEAD
 	                    	double particle2Mass = particle2.getMass();
 	                    	
 	                    	calculateFinalParticleVelocities(particle1, particle2, particle1Mass, particle2Mass, particle1Position, particle2Position, particle1Velocity, particle2Velocity);
+=======
+	                    	Vector particle2FinalVelocity;
+	                    	double particle2Mass = particle2.getMass();
+	                    	
+	                    	// particle 1 final velocity
+	                    	
+	                    	Vector deltaVelocity = particle1Velocity.subtract(particle2Velocity);
+	                    	Vector deltaPosition = particle1Position.subtract(particle2Position);
+	                    	double massCoefficient = (2*particle2Mass) / (particle1Mass + particle2Mass);
+	                    	double positionMangitudeSquared = particle1Position.subtract(particle2Position).magnitudeSquared();
+	                    	double dotProduct = deltaVelocity.dot(deltaPosition);
+	                    	
+	                    	particle1FinalVelocity = particle1Velocity.subtract(deltaPosition.multiplyByScalar(massCoefficient * (dotProduct/positionMangitudeSquared)));
+	                    	
+	                    	particle1.setxVel(particle1FinalVelocity.x2);
+	                    	particle1.setyVel(particle1FinalVelocity.y2);
+	                    	
+	                    	// particle 2 final velocity
+	                    	
+	                    	Vector deltaVelocity2 = particle2Velocity.subtract(particle1Velocity);
+	                    	Vector deltaPosition2 = particle2Position.subtract(particle1Position);
+	                    	double massCoefficient2 = (2*particle1Mass) / (particle1Mass + particle2Mass);
+	                    	double positionMagnitudeSquared = particle2Position.subtract(particle1Position).magnitudeSquared();
+	                    	double dotProduct2 = deltaVelocity2.dot(deltaPosition2);
+	                    	
+	                    	particle2FinalVelocity = particle2Velocity.subtract(deltaPosition2.multiplyByScalar(massCoefficient2 * (dotProduct2/positionMagnitudeSquared)));
+	                    	
+	                    	particle2.setxVel(particle2FinalVelocity.x2);
+	                    	particle2.setyVel(particle2FinalVelocity.y2);
+>>>>>>> e74f9eb20bb06152ee33453bef0ed0422f088d93
 	                 
 	                    	
 	                    }
@@ -97,6 +144,7 @@ public class PhysicsLogic {
 	        }
 	    }
 	}
+<<<<<<< HEAD
 	
 	private static void calculateFinalParticleVelocities(Particle particle1, Particle particle2, double particle1Mass, double particle2Mass, Vector particle1Position, Vector particle2Position, Vector particle1Velocity, Vector particle2Velocity) {
 		
@@ -129,6 +177,9 @@ public class PhysicsLogic {
     	particle2.setyVel(particle2FinalVelocity.y2);
 		
 	}
+=======
+
+>>>>>>> e74f9eb20bb06152ee33453bef0ed0422f088d93
 	
 	public static void particleBlockCollision(LinkedList<SimulationObject> objects, Particle particle) {
         for (SimulationObject tempObject : objects) {

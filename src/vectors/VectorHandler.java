@@ -30,4 +30,7 @@ public class VectorHandler {
 	}
 	
 }
+<<<<<<< HEAD
         
+=======
+>>>>>>> e74f9eb20bb06152ee33453bef0ed0422f088d93
