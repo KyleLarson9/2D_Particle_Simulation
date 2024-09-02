@@ -6,7 +6,7 @@ public class Main {
 		
 		new Simulation();
 				
-		System.out.println("Test");
+		System.out.println("Testing");
 		
 	}
 	
